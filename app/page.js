@@ -2,6 +2,7 @@ import BestSellers from "./_components/BestSellers";
 import ImageGallery from "./_components/ImageGallery";
 import ProductRange from "./_components/ProductRange";
 import Slider from "./_components/Slider";
+import SocialMediaPanel from "./_components/SocialMediaPanel";
 
 export default function Home() {
   return (
