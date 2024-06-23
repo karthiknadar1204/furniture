@@ -1,3 +1,4 @@
+import BestSellers from "./_components/BestSellers";
 import ImageGallery from "./_components/ImageGallery";
 import ProductRange from "./_components/ProductRange";
 import Slider from "./_components/Slider";
@@ -11,6 +12,10 @@ export default function Home() {
       </div>
       <div className="mt-24" >
       <ImageGallery/>
+      </div>
+
+      <div className="mt-24" >
+        <BestSellers/>
       </div>
     </main>
   );
