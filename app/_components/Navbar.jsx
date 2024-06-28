@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
+import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { Menu, X, Heart, ShoppingCart, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { checkUserRole } from '../../utils/UserUtils';
 
 const Navbar = () => {
+  const { session } = useSession();
+  const userRole = session ? checkUserRole(session) : null;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -39,6 +45,17 @@ const Navbar = () => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+        {/* Dashboard Button for Admin */}
+        {/* {userRole === 'admin' && ( */}
+          <Link href={'/admin'}>
+            <Button>DashBoard</Button>
+          </Link>
+        {/* // )} */}
+        <SignedIn>
+          <div className='ml-4'>
+            <UserButton afterSignOutUrl='/' />
+          </div>
+        </SignedIn>
       </div>
       {/* Mobile Menu */}
       {isOpen && (

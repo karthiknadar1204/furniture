@@ -3,6 +3,13 @@ import "./globals.css";
 import Navbar from "./_components/Navbar";
 import Footer from "./_components/Footer";
 // import SocialMediaPanel from "./_components/SocialMediaPanel";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,13 +20,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar/>
-        {/* <SocialMediaPanel/> */}
-        {children}
-        <Footer/>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <Navbar/>
+          {/* <SocialMediaPanel/> */}
+          {children}
+          <Footer/>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
