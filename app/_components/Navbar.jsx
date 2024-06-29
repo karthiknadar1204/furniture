@@ -1,16 +1,33 @@
 "use client";
 
-import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Menu, X, Heart, ShoppingCart, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowDown } from 'lucide-react';
 import Link from 'next/link';
-import { checkUserRole } from '../../utils/UserUtils';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+const predefinedCategories = [
+  { id: 1, name: 'Bedroom', subcategories: ['Wardrobe', 'Bed-side Table', 'Bed', 'Dresser', 'Mattress'] },
+  { id: 2, name: 'Living Room', subcategories: ['Sofa', 'Sofa-cum-bed', 'Multi-utility Cabinet', 'Center Table', 'Bookshelf'] },
+  { id: 3, name: 'Dining', subcategories: ['Kitchen Cabinet', 'Dining Table'] },
+  { id: 4, name: 'Office', subcategories: ['Office Table', 'Office Chair', 'Study Table', 'Bookshelf', 'Filing Cabinet'] },
+];
 
 const Navbar = () => {
-  const { session } = useSession();
-  const userRole = session ? checkUserRole(session) : null;
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -27,7 +44,33 @@ const Navbar = () => {
         {/* Menu Links */}
         <div className="hidden md:flex space-x-6">
           <a href="#" className="text-gray-600 hover:text-gray-800">Home</a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">Product Categories</a>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <a href='#'>Product Categories  <ArrowDown /></a>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuGroup>
+                {predefinedCategories.map(category => (
+                  <DropdownMenuSub key={category.id}>
+                    <DropdownMenuSubTrigger>
+                      {category.name}
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        {category.subcategories.map(subcategory => (
+                          <DropdownMenuItem key={subcategory}>
+                            <Link href={`/category/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}>
+                              {subcategory}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <a href="#" className="text-gray-600 hover:text-gray-800">Projects</a>
           <a href="#" className="text-gray-600 hover:text-gray-800">Media</a>
           <a href="#" className="text-gray-600 hover:text-gray-800">About Us</a>
@@ -46,16 +89,9 @@ const Navbar = () => {
           </button>
         </div>
         {/* Dashboard Button for Admin */}
-        {/* {userRole === 'admin' && ( */}
-          <Link href={'/admin'}>
-            <Button>DashBoard</Button>
-          </Link>
-        {/* // )} */}
-        <SignedIn>
-          <div className='ml-4'>
-            <UserButton afterSignOutUrl='/' />
-          </div>
-        </SignedIn>
+        <Link href={'/admin'}>
+          <Button>DashBoard</Button>
+        </Link>
       </div>
       {/* Mobile Menu */}
       {isOpen && (

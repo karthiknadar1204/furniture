@@ -101,7 +101,6 @@ const Page = () => {
     };
 
     try {
-      // Insert the product into the database excluding the id field
       const result = await db.insert(products).values(product);
 
       if (result) {
