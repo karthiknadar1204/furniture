@@ -22,7 +22,7 @@ const CategoryPage = () => {
                 const result = await db.select().from(products).where(eq(products.product_id, categoryId)).execute();
                 
                 setProductsList(result);
-                console.log(result);
+                console.log(result[0]);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }

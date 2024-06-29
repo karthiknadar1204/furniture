@@ -53,14 +53,15 @@ const predefinedSubcategories = {
 };
 
 const Page = () => {
-  const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
 
-  const handleSubcategorySelect = (subcategory) => {
-    setSelectedSubcategory(subcategory);
+  const handleSubcategorySelect = (subcategoryName) => {
+    const selectedSub = Object.values(predefinedSubcategories).flat().find(sub => sub.name === subcategoryName);
+    setSelectedSubcategory(selectedSub);
   };
 
   const handleNameChange = (e) => {
@@ -81,8 +82,14 @@ const Page = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!selectedSubcategory) {
+      console.error("Subcategory not selected");
+      toast('Subcategory not selected');
+      return;
+    }
+
     const category = predefinedCategories.find(cat => 
-      predefinedSubcategories[cat.id].some(subcat => subcat.name === selectedSubcategory)
+      predefinedSubcategories[cat.id].some(subcat => subcat.id === selectedSubcategory.id)
     );
 
     if (!category) {
@@ -92,14 +99,14 @@ const Page = () => {
     }
 
     const product = {
-      id:uuidv4(),
+      id: uuidv4(),
       category: category.name,
-      subcategory: selectedSubcategory,
+      subcategory: selectedSubcategory.name,
       name: productName,
       description: productDescription,
       price: parseInt(productPrice, 10),
       stock: parseInt(productStock, 10),
-      product_id:category.id
+      product_id: selectedSubcategory.id
     };
 
     try {
@@ -133,12 +140,12 @@ const Page = () => {
               <DialogDescription>
                 <form onSubmit={handleSubmit}>
                   <Select
-                    value={selectedSubcategory}
+                    value={selectedSubcategory ? selectedSubcategory.name : ""}
                     onValueChange={handleSubcategorySelect}
                     required
                   >
                     <SelectTrigger className="w-[180px]">
-                      <SelectValue>{selectedSubcategory || "Select a subcategory"}</SelectValue>
+                      <SelectValue>{selectedSubcategory ? selectedSubcategory.name : "Select a subcategory"}</SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {predefinedSubcategories[category.id].map((subcategory) => (
