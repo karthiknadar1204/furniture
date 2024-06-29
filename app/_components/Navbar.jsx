@@ -59,7 +59,7 @@ const Navbar = () => {
                       <DropdownMenuSubContent>
                         {category.subcategories.map(subcategory => (
                           <DropdownMenuItem key={subcategory}>
-                            <Link href={`/category/${category.name.toLowerCase()}/${subcategory.toLowerCase()}`}>
+                            <Link href={`/category/${category.name.toLowerCase()}/${subcategory.toLowerCase()}/${category.id}`}>
                               {subcategory}
                             </Link>
                           </DropdownMenuItem>
