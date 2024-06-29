@@ -12,6 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/Input";
+import { toast } from "react-toastify";
+import { db } from "@/configs";
+import { products } from "@/configs/schema";
 
 const predefinedCategories = [
   { id: 1, name: 'Bedroom' },
@@ -75,12 +78,43 @@ const Page = () => {
     setProductStock(e.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log("Selected Subcategory:", selectedSubcategory);
-    console.log("Product Name:", productName);
-    console.log("Product Description:", productDescription);
-    console.log("Product Price:", productPrice);
-    console.log("Product Stock:", productStock);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const category = predefinedCategories.find(cat => 
+      predefinedSubcategories[cat.id].some(subcat => subcat.name === selectedSubcategory)
+    );
+
+    if (!category) {
+      console.error("Category not found for selected subcategory");
+      toast('Category not found for selected subcategory');
+      return;
+    }
+
+    const product = {
+      id:category.id,
+      category: category.name,
+      subcategory: selectedSubcategory,
+      name: productName,
+      description: productDescription,
+      price: parseInt(productPrice, 10),
+      stock: parseInt(productStock, 10),
+    };
+
+    try {
+      // Insert the product into the database excluding the id field
+      const result = await db.insert(products).values(product);
+
+      if (result) {
+        console.log("Product added successfully");
+        toast('Product added successfully');
+      } else {
+        console.error("Failed to add product");
+        toast('Failed to add product');
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast('An error occurred');
+    }
   };
 
   return (
@@ -96,50 +130,53 @@ const Page = () => {
             <DialogHeader>
               <DialogTitle>{category.name} Category Details</DialogTitle>
               <DialogDescription>
-                <Select
-                  value={selectedSubcategory}
-                  onValueChange={handleSubcategorySelect}
-                  required
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue>{selectedSubcategory || "Select a subcategory"}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    {predefinedSubcategories[category.id].map((subcategory) => (
-                      <SelectItem key={subcategory.id} value={subcategory.name}>
-                        {subcategory.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <form onSubmit={handleSubmit}>
+                  <Select
+                    value={selectedSubcategory}
+                    onValueChange={handleSubcategorySelect}
+                    required
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue>{selectedSubcategory || "Select a subcategory"}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {predefinedSubcategories[category.id].map((subcategory) => (
+                        <SelectItem key={subcategory.id} value={subcategory.name}>
+                          {subcategory.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
 
-                <Input
-                  type="text"
-                  placeholder="Product Name"
-                  value={productName}
-                  onChange={handleNameChange}
-                />
-                <Input
-                  type="text"
-                  placeholder="Product Description"
-                  value={productDescription}
-                  onChange={handleDescriptionChange}
-                />
-                <Input
-                  type="number"
-                  placeholder="Price"
-                  value={productPrice}
-                  onChange={handlePriceChange}
-                />
-                <Input
-                  type="number"
-                  placeholder="Stock"
-                  value={productStock}
-                  onChange={handleStockChange}
-                />
+                  <Input
+                    type="text"
+                    placeholder="Product Name"
+                    value={productName}
+                    onChange={handleNameChange}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="Product Description"
+                    value={productDescription}
+                    onChange={handleDescriptionChange}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Price"
+                    value={productPrice}
+                    onChange={handlePriceChange}
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Stock"
+                    value={productStock}
+                    onChange={handleStockChange}
+                  />
+
+                  <Button type="submit">Submit</Button>
+                </form>
               </DialogDescription>
             </DialogHeader>
-            <Button onClick={handleSubmit}>Submit</Button>
           </DialogContent>
         </Dialog>
       ))}
