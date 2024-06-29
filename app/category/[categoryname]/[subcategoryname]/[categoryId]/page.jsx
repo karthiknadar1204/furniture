@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { db } from '@/configs';
 import { products } from '@/configs/schema';
@@ -15,14 +15,13 @@ const CategoryPage = () => {
         const fetchProducts = async () => {
             try {
                 const parts = pathname.split('/');
-                const categoryId = parts[parts.length - 1]; 
+                const categoryId = parseInt(parts[parts.length - 1], 10); // Parse category ID as an integer
                 console.log(categoryId);
 
-                const result = await db.select().from(products).where(eq('categoryId', categoryId));
-                // const result=await db.select({
-                //     id:categoryId
-                // }).from(products);
-                // setProductsList(result);
+                // Fetch products where the product_id matches the categoryId from the URL
+                const result = await db.select().from(products).where(eq(products.product_id, categoryId)).execute();
+                
+                setProductsList(result);
                 console.log(result);
             } catch (error) {
                 console.error('Error fetching products:', error);

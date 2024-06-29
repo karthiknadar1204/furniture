@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/Input";
 import { toast } from "react-toastify";
 import { db } from "@/configs";
 import { products } from "@/configs/schema";
+import { v4 as uuidv4 } from 'uuid';
 
 const predefinedCategories = [
   { id: 1, name: 'Bedroom' },
@@ -32,7 +33,7 @@ const predefinedSubcategories = {
     { id: 5, name: 'Mattress' },
   ],
   2: [
-    { id: 6, name: 'Sofa' },
+    { id: 6, name: 'Sofa' }, 
     { id: 7, name: 'Sofa-cum-bed' },
     { id: 8, name: 'Multi-utility Cabinet' },
     { id: 9, name: 'Center Table' },
@@ -91,13 +92,14 @@ const Page = () => {
     }
 
     const product = {
-      id:category.id,
+      id:uuidv4(),
       category: category.name,
       subcategory: selectedSubcategory,
       name: productName,
       description: productDescription,
       price: parseInt(productPrice, 10),
       stock: parseInt(productStock, 10),
+      product_id:category.id
     };
 
     try {
