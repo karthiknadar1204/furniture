@@ -98,11 +98,11 @@ const Page = () => {
               <DialogDescription>
                 <Select
                   value={selectedSubcategory}
-                  onChange={(e) => handleSubcategorySelect(e.target.value)}
+                  onValueChange={handleSubcategorySelect}
                   required
                 >
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue>Select a subcategory</SelectValue>
+                    <SelectValue>{selectedSubcategory || "Select a subcategory"}</SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {predefinedSubcategories[category.id].map((subcategory) => (
