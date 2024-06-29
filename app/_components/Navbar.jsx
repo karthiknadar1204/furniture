@@ -39,7 +39,9 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-9 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <Image src="/next.svg" alt="Logo" width={100} height={100} />
+          <Link href={'/'} >
+            <Image src="/next.svg" alt="Logo" width={100} height={100} />
+          </Link>
         </div>
         {/* Menu Links */}
         <div className="hidden md:flex space-x-6">
