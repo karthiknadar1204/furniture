@@ -20,7 +20,7 @@ export default function Home() {
         <BestSellers/>
       </div>
 
-      <div className="mt-24" >
+      <div className="mt-24 bottom-0" >
         <ExtraImages/>
       </div>
     </main>

@@ -19,7 +19,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { UserButton } from '@clerk/nextjs';
+import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs'
+import { checkUserRole } from '@/utils/UserUtils';
 
 const predefinedCategories = [
   { id: 1, name: 'Bedroom', subcategories: [{ id: 1, name: 'Wardrobe' }, { id: 2, name: 'Bed-side Table' }, { id: 3, name: 'Bed' }, { id: 4, name: 'Dresser' }, { id: 5, name: 'Mattress' }] },
@@ -29,6 +30,10 @@ const predefinedCategories = [
 ];
 
 const Navbar = () => {
+  const { session } = useSession();
+  console.log("Session object:", session); 
+  const userRole = checkUserRole(session);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -94,10 +99,14 @@ const Navbar = () => {
           </button>
         </div>
         {/* Dashboard Button for Admin */}
-        {/* <Link href={'/admin'}>
-          <Button>DashBoard</Button>
-        </Link> */}
-        <UserButton/>
+        { userRole === 'org:admin' &&
+        <>
+            <Link href={'/admin'}>
+              <Button>DashBoard</Button>
+            </Link>
+        </>
+        }
+<UserButton/>
       </div>
       {/* Mobile Menu */}
       {isOpen && (
