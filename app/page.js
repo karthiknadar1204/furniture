@@ -1,4 +1,5 @@
 import BestSellers from "./_components/BestSellers";
+import ExtraImages from "./_components/ExtraImages";
 import ImageGallery from "./_components/ImageGallery";
 import ProductRange from "./_components/ProductRange";
 import Slider from "./_components/Slider";
@@ -17,6 +18,10 @@ export default function Home() {
 
       <div className="mt-24" >
         <BestSellers/>
+      </div>
+
+      <div className="mt-24" >
+        <ExtraImages/>
       </div>
     </main>
   );

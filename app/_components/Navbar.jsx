@@ -19,6 +19,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { UserButton } from '@clerk/nextjs';
 
 const predefinedCategories = [
   { id: 1, name: 'Bedroom', subcategories: [{ id: 1, name: 'Wardrobe' }, { id: 2, name: 'Bed-side Table' }, { id: 3, name: 'Bed' }, { id: 4, name: 'Dresser' }, { id: 5, name: 'Mattress' }] },
@@ -48,7 +49,9 @@ const Navbar = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">Home</a>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <a href='#'>Product Categories  <ArrowDown /></a>
+              <a href="#" className="flex items-center text-gray-600 hover:text-gray-800">
+                Product Categories <ArrowDown className="ml-1" />
+              </a>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuGroup>
@@ -79,7 +82,7 @@ const Navbar = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">Contact Us</a>
         </div>
         {/* Icons */}
-        <div className="hidden md:flex space-x-4 items-center">
+        <div className="hidden md:flex space-x-4 items-center mb-6">
           <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <Search className="text-gray-600 hover:text-gray-800 cursor-pointer" />
@@ -91,15 +94,16 @@ const Navbar = () => {
           </button>
         </div>
         {/* Dashboard Button for Admin */}
-        <Link href={'/admin'}>
+        {/* <Link href={'/admin'}>
           <Button>DashBoard</Button>
-        </Link>
+        </Link> */}
+        <UserButton/>
       </div>
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Home</a>
+            <a href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Home</a>
             <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Product Categories</a>
             <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Projects</a>
             <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Media</a>
