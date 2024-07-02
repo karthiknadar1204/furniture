@@ -76,6 +76,10 @@ const Page = () => {
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
 
+  const handleViewClick = () => {
+    router.push('/all_products_info');
+  };
+
   const handleSubcategorySelect = (subcategoryName) => {
     const selectedSub = Object.values(predefinedSubcategories)
       .flat()
@@ -165,25 +169,6 @@ const Page = () => {
   const deleteImage = () => {
     setImage(null);
     setImagePreview(null);
-  };
-
-  const uploadImage = async () => {
-    if (!image) {
-      alert("Image not found!");
-      return;
-    }
-
-    const imageName = image.name.split(".")[0];
-    const storageRef = ref(Storage, imageName);
-
-    try {
-      await uploadBytesResumable(storageRef, image);
-      alert("Uploaded image!");
-      setImage(null);
-      setImagePreview(null);
-    } catch (error) {
-      alert("Failed to upload the image!");
-    }
   };
 
   return (
@@ -278,9 +263,6 @@ const Page = () => {
                               <TrashIcon className="w-6 h-6" />
                             </button>
                           </div>
-                          <button className="bg-white text-black py-2 rounded-lg font-bold" onClick={uploadImage}>
-                            Upload
-                          </button>
                         </div>
                       ) : (
                         <>
@@ -317,6 +299,7 @@ const Page = () => {
           </DialogContent>
         </Dialog>
       ))}
+        <Button onClick={handleViewClick}>View</Button>
     </div>
   );
 };
