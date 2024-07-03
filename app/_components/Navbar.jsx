@@ -19,7 +19,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs'
+import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '@/utils/UserUtils';
 
 const predefinedCategories = [
@@ -41,11 +41,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-md w-full z-10">
+    <nav className="bg-white shadow-md w-full z-10 relative">
       <div className="container mx-auto px-6 py-9 flex justify-between items-center">
         {/* Logo */}
         <div className="flex items-center">
-          <Link href={'/'} >
+          <Link href={'/'}>
             <Image src="/next.svg" alt="Logo" width={100} height={100} />
           </Link>
         </div>
@@ -86,42 +86,73 @@ const Navbar = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">About Us</a>
           <a href="#" className="text-gray-600 hover:text-gray-800">Contact Us</a>
         </div>
-        {/* Icons */}
-        <div className="hidden md:flex space-x-4 items-center mb-6">
+        {/* Icons, UserButton, and Dashboard Button for Admin */}
+        <div className="hidden md:flex items-center space-x-4">
           <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <Search className="text-gray-600 hover:text-gray-800 cursor-pointer" />
+          <UserButton />
+          {userRole === 'org:admin' && (
+            <Link href={'/admin'}>
+              <Button>DashBoard</Button>
+            </Link>
+          )}
         </div>
-        {/* Hamburger Icon */}
-        <div className="md:hidden flex items-center">
+        {/* Hamburger Icon for Mobile */}
+        <div className="md:hidden flex items-center space-x-4">
           <button onClick={toggleMenu} className="text-gray-600 hover:text-gray-800 focus:outline-none">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-        {/* Dashboard Button for Admin */}
-        { userRole === 'org:admin' &&
-        <>
-            <Link href={'/admin'}>
-              <Button>DashBoard</Button>
-            </Link>
-        </>
-        }
-<UserButton/>
       </div>
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Home</a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Product Categories</a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Projects</a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Media</a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">About Us</a>
-            <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Contact Us</a>
+            <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Home</Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">
+                  Product Categories <ArrowDown className="ml-1" />
+                </a>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-full">
+                <DropdownMenuGroup className='mr-48 mt-1'>
+                  {predefinedCategories.map(category => (
+                    <DropdownMenuSub key={category.id}>
+                      <DropdownMenuSubTrigger>
+                        {category.name}
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent className="w-full">
+                          {category.subcategories.map(subcategory => (
+                            <DropdownMenuItem key={subcategory.id}>
+                              <Link href={`/category/${category.name.toLowerCase()}/${subcategory.name.toLowerCase()}/${category.id}/${subcategory.id}`}>
+                                {subcategory.name}
+                              </Link>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Projects</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Media</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">About Us</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Contact Us</Link>
             <div className="flex justify-around py-3">
               <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
               <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
               <Search className="text-gray-600 hover:text-gray-800 cursor-pointer" />
+              <UserButton />
+              {userRole === 'org:admin' && (
+                <Link href={'/admin'}>
+                  <Button>DashBoard</Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
