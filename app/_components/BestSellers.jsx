@@ -41,7 +41,7 @@ const BestSellers = () => {
           <div key={index} className="relative flex flex-col items-center">
             <div className="w-48 h-48 relative">
               <Image
-                src={'/sofa.jpg'}
+                src={product.imageUrl}
                 alt={product.name}
                 layout="fill"
                 objectFit="cover"
