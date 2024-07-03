@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Menu, X, Heart, ShoppingCart, Search } from 'lucide-react';
 import { ArrowDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -55,7 +56,7 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <a href="#" className="flex items-center text-gray-600 hover:text-gray-800">
-                Product Categories <ArrowDown className="ml-1" />
+                Product Categories <ChevronDown className="ml-1" />
               </a>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -84,7 +85,7 @@ const Navbar = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">Projects</a>
           <a href="#" className="text-gray-600 hover:text-gray-800">Media</a>
           <a href="#" className="text-gray-600 hover:text-gray-800">About Us</a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">Contact Us</a>
+          <Link href="/contact" className="text-gray-600 hover:text-gray-800">Contact Us</Link>
         </div>
         {/* Icons, UserButton, and Dashboard Button for Admin */}
         <div className="hidden md:flex items-center space-x-4">
@@ -113,7 +114,7 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">
-                  Product Categories <ArrowDown className="ml-1" />
+                  Product Categories <ChevronDown className="ml-1" />
                 </a>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-full">
