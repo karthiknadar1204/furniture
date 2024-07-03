@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 
 const ContactPage = () => {
-  // State variables for form inputs
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [status, setStatus] = useState('');
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -25,11 +25,34 @@ const ContactPage = () => {
     setMessage(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', { name, email, subject, message });
-    // Clear form fields after submission if needed
+
+    const formDetails = { name, email, message };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDetails),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Email sent successfully:', data);
+        setStatus('Email sent successfully');
+      } else {
+        console.error('Error sending email:', data);
+        setStatus('Error sending email');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('Error submitting form');
+    }
+
     setName('');
     setEmail('');
     setSubject('');
@@ -160,6 +183,7 @@ const ContactPage = () => {
             </button>
           </div>
         </form>
+        {status && <p className="mt-4 text-center">{status}</p>}
       </div>
     </div>
   );
