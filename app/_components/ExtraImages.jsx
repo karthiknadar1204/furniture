@@ -18,10 +18,10 @@ const ExtraImages = () => {
       </div>
 
       {/* Second and Third Images */}
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Second Image */}
         <div className="relative flex-1 transform transition-transform hover:scale-105 cursor-pointer">
-          <Image src={"/sofa.jpg"} width={515} height={450} alt="Second Image" className="w-full h-auto" />
+          <Image src={"/sofa.jpg"} width={480} height={450} alt="Second Image" className="w-full h-auto" />
           <div className="absolute top-0 left-0 p-6 text-white text-3xl font-bold m-5 sm:text-2xl md:text-3xl lg:text-4xl">
             Custom Made <br /> Furniture
             <div className="flex items-center mt-4">
@@ -33,7 +33,7 @@ const ExtraImages = () => {
 
         {/* Third Image */}
         <div className="relative flex-1 transform transition-transform hover:scale-105 cursor-pointer">
-          <Image src={"/sofa.jpg"} width={515} height={450} alt="Third Image" className="w-full h-auto" />
+          <Image src={"/sofa.jpg"} width={480} height={450} alt="Third Image" className="w-full h-auto" />
           <div className="absolute top-0 left-0 p-6 text-white text-3xl font-bold m-5 sm:text-2xl md:text-3xl lg:text-4xl">
             Customize <br /> Modular Furniture
             <div className="flex items-center mt-4">

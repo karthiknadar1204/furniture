@@ -9,6 +9,8 @@ import { eq } from 'drizzle-orm';
 import Image from 'next/image';
 import { PencilOff } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { Storage } from "@/firebase";
 
 const categories = [
   { id: 1, name: 'Living Room' },
@@ -22,10 +24,19 @@ const AllProductsInfo = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [editedProduct, setEditedProduct] = useState(null);
+  const [editedProduct, setEditedProduct] = useState({
+    id: null,
+    name: '',
+    price: 0,
+    stock: 0,
+    description: '',
+    imageUrl: ''
+  });
   const [editedName, setEditedName] = useState('');
   const [editedPrice, setEditedPrice] = useState(0);
   const [editedStock, setEditedStock] = useState(0);
+  const [editedDescription, setEditedDescription] = useState('');
+  const [editedImageFile, setEditedImageFile] = useState(null); // State to hold the new image file
   const router = useRouter();
 
   const handleCategoryClick = async (category) => {
@@ -64,21 +75,60 @@ const AllProductsInfo = () => {
     setEditedName(product.name);
     setEditedPrice(product.price);
     setEditedStock(product.stock);
+    setEditedDescription(product.description);
     setIsEditModalOpen(true);
   };
 
   const saveChanges = async () => {
     try {
+      let newImageUrl = editedProduct.imageUrl;
+  
+      if (editedImageFile) {
+        // Upload new image file
+        const imageName = editedImageFile.name.split(".")[0];
+        const storageRef = ref(Storage, imageName);
+  
+        const uploadTask = uploadBytesResumable(storageRef, editedImageFile);
+  
+        // Wait for the upload to complete and get the download URL
+        const snapshot = await new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            () => {},
+            reject,
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
+            }
+          );
+        });
+  
+        newImageUrl = snapshot;
+      }
+  
+      // Update product details in the database
       await db
         .update(products)
-        .set({ name: editedName, price: editedPrice, stock: editedStock })
+        .set({
+          name: editedName,
+          price: editedPrice,
+          stock: editedStock,
+          description: editedDescription,
+          imageUrl: newImageUrl // Use the new image URL
+        })
         .where(eq(products.id, editedProduct.id))
         .execute();
-
+  
       // Update modalContent state after editing
       const updatedContent = modalContent.map((product) =>
         product.id === editedProduct.id
-          ? { ...product, name: editedName, price: editedPrice, stock: editedStock }
+          ? {
+              ...product,
+              name: editedName,
+              price: editedPrice,
+              stock: editedStock,
+              description: editedDescription,
+              imageUrl: newImageUrl
+            }
           : product
       );
       setModalContent(updatedContent);
@@ -87,11 +137,67 @@ const AllProductsInfo = () => {
       console.error("Error updating product:", error);
     }
   };
+  
+
+  // const saveChanges = async () => {
+  //   try {
+  //     if (editedImageFile) {
+  //       // Upload new image file
+  //       const imageName = editedImageFile.name.split(".")[0];
+  //       const storageRef = ref(Storage, imageName);
+
+  //       await uploadBytesResumable(storageRef, editedImageFile);
+  //       const downloadURL = await getDownloadURL(storageRef);
+
+  //       // Update editedProduct with new image URL
+  //       setEditedProduct((prevState) => ({
+  //         ...prevState,
+  //         imageUrl: downloadURL
+  //       }));
+  //     }
+
+  //     // Update product details in database
+  //     await db
+  //       .update(products)
+  //       .set({
+  //         name: editedName,
+  //         price: editedPrice,
+  //         stock: editedStock,
+  //         description: editedDescription,
+  //         imageUrl: editedProduct.imageUrl // Use updated image URL or existing URL
+  //       })
+  //       .where(eq(products.id, editedProduct.id))
+  //       .execute();
+
+  //     // Update modalContent state after editing
+  //     const updatedContent = modalContent.map((product) =>
+  //       product.id === editedProduct.id
+  //         ? {
+  //             ...product,
+  //             name: editedName,
+  //             price: editedPrice,
+  //             stock: editedStock,
+  //             description: editedDescription,
+  //             imageUrl: editedProduct.imageUrl
+  //           }
+  //         : product
+  //     );
+  //     setModalContent(updatedContent);
+  //     setIsEditModalOpen(false);
+  //   } catch (error) {
+  //     console.error("Error updating product:", error);
+  //   }
+  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent([]);
     setSelectedCategory(null);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setEditedImageFile(file);
   };
 
   return (
@@ -244,6 +350,23 @@ const AllProductsInfo = () => {
                       type="number"
                       value={editedStock}
                       onChange={(e) => setEditedStock(e.target.value)}
+                      className="border border-gray-300 rounded-md p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea
+                      value={editedDescription}
+                      onChange={(e) => setEditedDescription(e.target.value)}
+                      className="border border-gray-300 rounded-md p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Upload New Image</label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
                       className="border border-gray-300 rounded-md p-2 w-full"
                     />
                   </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRouter, usePathname } from "next/navigation";
 import { db } from '@/configs';
@@ -43,10 +43,9 @@ const ProductInfo = () => {
   }
 
   return (
-    <div className="p-6 flex flex-col items-center">
-      <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
-      <div className="flex">
-        <div className="w-96 h-96 relative mr-6">
+    <div className="p-6 flex flex-col items-center mt-24">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start">
+        <div className="w-full sm:w-96 h-96 relative sm:mr-6 mb-4 sm:mb-0">
           <Image
             src={product.imageUrl || "/Sofa.jpg"}
             alt={product.name}
@@ -55,21 +54,30 @@ const ProductInfo = () => {
             className="object-contain rounded-md"
           />
         </div>
-        <div className="flex flex-col justify-center">
-          <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
-          <p className="text-lg mb-2">${product.price}</p>
+        <div className="flex flex-col items-center sm:items-start sm:ml-16">
+          <h2 className="text-5xl font-bold mb-2">{product.name}</h2>
           {product.stock > 0 ? (
-            <span className="bg-green-200 text-green-800 text-sm font-semibold px-4 py-2 rounded-full">
-              In Stock
+            <span className="bg-green-200 text-green-800 text-sm font-semibold px-4 py-2 mb-2 mt-4">
+              *In Stock
             </span>
           ) : (
-            <span className="bg-red-200 text-red-800 text-sm font-semibold px-4 py-2 rounded-full">
+            <span className="bg-red-200 text-red-800 text-sm font-semibold px-4 py-2 mb-2 mt-4">
               Out of Stock
             </span>
           )}
+          <hr className="w-60 border-t border-gray-400 opacity-50 mt-4"/>
+          <p className="text-2xl text-red-600 font-bold mt-8">${product.price}</p>
+          <hr className="w-60 border-t border-gray-400 opacity-50 mt-4"/>
+          <p className="text-lg mt-4">SKU: {product.id}</p>
+          <p className="text-lg mt-2">Category: {product.category}</p>
+          <p className="text-lg mt-2">Subcategory: {product.subcategory}</p>
         </div>
       </div>
-      <p className="mt-4 text-lg">{product.description}</p>
+      <div className="w-full sm:w-3/4 lg:w-2/3 mt-28"> {/* Added margin-top to move description lower */}
+        <h1 className="text-left text-2xl font-bold">Description</h1>
+        <hr className="w-full border-t border-gray-400 opacity-50 mt-2"/>
+        <p className="mt-4 text-lg text-left">{product.description}</p>
+      </div>
     </div>
   );
 };

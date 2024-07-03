@@ -51,7 +51,7 @@ const Navbar = () => {
         </div>
         {/* Menu Links */}
         <div className="hidden md:flex space-x-6">
-          <a href="#" className="text-gray-600 hover:text-gray-800">Home</a>
+          <Link href="/" className="text-gray-600 hover:text-gray-800">Home</Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <a href="#" className="flex items-center text-gray-600 hover:text-gray-800">
