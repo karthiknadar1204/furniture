@@ -2,14 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./_components/Navbar";
 import Footer from "./_components/Footer";
-
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +14,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <Navbar/>
-          {children}
+      <html lang="en" className="h-full">
+        <body className={`${inter.className} h-full flex flex-col`}>
+          <Navbar />
+          <div className="flex-grow">{children}</div>
           <hr className="border-t border-gray-800 my-8 opacity-25" />
-          <Footer/>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>
