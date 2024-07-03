@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -7,8 +7,7 @@ import { db } from '@/configs';
 import { products } from '@/configs/schema';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
-import { PencilOff } from 'lucide-react';
-import { Trash2 } from 'lucide-react';
+import { PencilOff, Trash2 } from 'lucide-react';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Storage } from "@/firebase";
 
@@ -37,6 +36,7 @@ const AllProductsInfo = () => {
   const [editedStock, setEditedStock] = useState(0);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedImageFile, setEditedImageFile] = useState(null); // State to hold the new image file
+  const [isLoading, setIsLoading] = useState(false); // State to track loading state
   const router = useRouter();
 
   const handleCategoryClick = async (category) => {
@@ -47,9 +47,17 @@ const AllProductsInfo = () => {
         .where(eq(products.category, category.name))
         .execute();
 
-      setModalContent(result);
-      setSelectedCategory(category.name);
-      setIsModalOpen(true);
+      if (result.length === 0) {
+        // If no products found, show "Add Products"
+        setModalContent([{ id: 'addProducts', name: 'Add Products' }]);
+        setSelectedCategory(category.name);
+        setIsModalOpen(true);
+      } else {
+        // Otherwise, show the products
+        setModalContent(result);
+        setSelectedCategory(category.name);
+        setIsModalOpen(true);
+      }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -81,6 +89,8 @@ const AllProductsInfo = () => {
 
   const saveChanges = async () => {
     try {
+      setIsLoading(true); // Start loading
+
       let newImageUrl = editedProduct.imageUrl;
   
       if (editedImageFile) {
@@ -135,59 +145,10 @@ const AllProductsInfo = () => {
       setIsEditModalOpen(false);
     } catch (error) {
       console.error("Error updating product:", error);
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
-  
-
-  // const saveChanges = async () => {
-  //   try {
-  //     if (editedImageFile) {
-  //       // Upload new image file
-  //       const imageName = editedImageFile.name.split(".")[0];
-  //       const storageRef = ref(Storage, imageName);
-
-  //       await uploadBytesResumable(storageRef, editedImageFile);
-  //       const downloadURL = await getDownloadURL(storageRef);
-
-  //       // Update editedProduct with new image URL
-  //       setEditedProduct((prevState) => ({
-  //         ...prevState,
-  //         imageUrl: downloadURL
-  //       }));
-  //     }
-
-  //     // Update product details in database
-  //     await db
-  //       .update(products)
-  //       .set({
-  //         name: editedName,
-  //         price: editedPrice,
-  //         stock: editedStock,
-  //         description: editedDescription,
-  //         imageUrl: editedProduct.imageUrl // Use updated image URL or existing URL
-  //       })
-  //       .where(eq(products.id, editedProduct.id))
-  //       .execute();
-
-  //     // Update modalContent state after editing
-  //     const updatedContent = modalContent.map((product) =>
-  //       product.id === editedProduct.id
-  //         ? {
-  //             ...product,
-  //             name: editedName,
-  //             price: editedPrice,
-  //             stock: editedStock,
-  //             description: editedDescription,
-  //             imageUrl: editedProduct.imageUrl
-  //           }
-  //         : product
-  //     );
-  //     setModalContent(updatedContent);
-  //     setIsEditModalOpen(false);
-  //   } catch (error) {
-  //     console.error("Error updating product:", error);
-  //   }
-  // };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -378,10 +339,18 @@ const AllProductsInfo = () => {
                       Cancel
                     </button>
                     <button
-                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
                       onClick={saveChanges}
+                      disabled={isLoading}
                     >
-                      Save Changes
+                      {isLoading ? (
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V2.5a.5.5 0 011 0V4a8 8 0 01-8 8z"></path>
+                        </svg>
+                      ) : (
+                        <span>Save Changes</span>
+                      )}
                     </button>
                   </div>
                 </div>

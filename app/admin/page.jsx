@@ -26,7 +26,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Storage } from "@/firebase";
 import Image from "next/image";
 import { PlusIcon, TrashIcon } from "@heroicons/react/20/solid";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
+import { Loader } from "lucide-react";
 
 const predefinedCategories = [
   { id: 1, name: "Bedroom" },
@@ -75,6 +76,7 @@ const Page = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleViewClick = () => {
     router.push("/all_products_info");
@@ -105,9 +107,12 @@ const Page = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
+
     if (!selectedSubcategory) {
       console.error("Subcategory not selected");
       toast("Subcategory not selected");
+      setLoading(false);
       return;
     }
 
@@ -120,6 +125,7 @@ const Page = () => {
     if (!category) {
       console.error("Category not found for selected subcategory");
       toast("Category not found for selected subcategory");
+      setLoading(false);
       return;
     }
 
@@ -154,6 +160,8 @@ const Page = () => {
     } catch (error) {
       console.error("An error occurred:", error);
       toast("An error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -293,8 +301,14 @@ const Page = () => {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full">
-                    Submit
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? (
+                      <div className="flex items-center justify-center h-12">
+                        <Loader className="animate-spin" />
+                      </div>
+                    ) : (
+                      "Submit"
+                    )}
                   </Button>
                 </form>
               </DialogDescription>

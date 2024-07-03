@@ -6,6 +6,7 @@ import { products } from '@/configs/schema';
 import { eq } from 'drizzle-orm';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Loader } from 'lucide-react';
 
 const ProductInfo = () => {
   const router = useRouter();
@@ -39,7 +40,11 @@ const ProductInfo = () => {
   }, [pathname]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin" />
+      </div>
+    );
   }
 
   return (
@@ -68,12 +73,12 @@ const ProductInfo = () => {
           <hr className="w-60 border-t border-gray-400 opacity-50 mt-4"/>
           <p className="text-2xl text-red-600 font-bold mt-8">${product.price}</p>
           <hr className="w-60 border-t border-gray-400 opacity-50 mt-4"/>
-          <p className="text-lg mt-4">SKU: {product.id}</p>
-          <p className="text-lg mt-2">Category: {product.category}</p>
-          <p className="text-lg mt-2">Subcategory: {product.subcategory}</p>
+          <p className="text-sm mt-4">SKU: {product.id}</p>
+          <p className="text-sm mt-2">Category: {product.category}</p>
+          <p className="text-sm mt-2">Subcategory: {product.subcategory}</p>
         </div>
       </div>
-      <div className="w-full sm:w-3/4 lg:w-2/3 mt-28"> {/* Added margin-top to move description lower */}
+      <div className="w-full sm:w-3/4 lg:w-2/3 mt-28">
         <h1 className="text-left text-2xl font-bold">Description</h1>
         <hr className="w-full border-t border-gray-400 opacity-50 mt-2"/>
         <p className="mt-4 text-lg text-left">{product.description}</p>
