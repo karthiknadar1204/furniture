@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const ContactPage = () => {
   // State variables for form inputs
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -28,25 +28,24 @@ const ContactPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log("Form submitted:", { name, email, subject, message });
+    console.log('Form submitted:', { name, email, subject, message });
     // Clear form fields after submission if needed
-    setName("");
-    setEmail("");
-    setSubject("");
-    setMessage("");
+    setName('');
+    setEmail('');
+    setSubject('');
+    setMessage('');
   };
 
   return (
-    <div className="flex justify-center items-start p-6">
+    <div className="flex flex-col lg:flex-row justify-center items-start p-6">
       {/* Left Content */}
-      <div className="max-w-lg mr-8">
+      <div className="max-w-lg lg:mr-8 mb-8 lg:mb-0">
         {/* Showroom and Store */}
         <div className="text-3xl font-bold mb-4">Showroom and Store</div>
 
         {/* Thanking you text */}
         <p className="mb-4">
-          Thank you for visiting our showroom and store. We appreciate your
-          interest in our products.
+          Thank you for visiting our showroom and store. We appreciate your interest in our products.
         </p>
 
         {/* Opening Hours */}
@@ -56,14 +55,14 @@ const ContactPage = () => {
         </div>
 
         {/* Address and Showroom */}
-        <div className="flex mb-4">
-          <div className="w-1/2">
+        <div className="flex flex-wrap mb-4">
+          <div className="w-full lg:w-1/2 mb-4 lg:mb-0">
             <p className="font-bold">Address</p>
             <p>123 Main Street</p>
             <p>City, State ZIP</p>
             <p>Country</p>
           </div>
-          <div className="w-1/2">
+          <div className="w-full lg:w-1/2">
             <p className="font-bold">Showroom</p>
             <p>456 Side Avenue</p>
             <p>City, State ZIP</p>
@@ -72,29 +71,27 @@ const ContactPage = () => {
         </div>
 
         {/* Additional Contact Details */}
-
-        <div className="flex mb-4">
-          <div className="w-1/2">
+        <div className="flex flex-wrap mb-4">
+          <div className="w-full lg:w-1/2 mb-4 lg:mb-0">
             <p className="font-bold">Contact</p>
-            <p>oll-Free: 1-800-123-4567</p>
+            <p>Toll-Free: 1-800-123-4567</p>
+            <p>Email: contact@example.com</p>
           </div>
-          <div className="w-1/2">
-            <p className="font-bold">LandLine</p>
+          <div className="w-full lg:w-1/2">
+            <p className="font-bold">Landline</p>
             <p>+1 234 567890</p>
+            <p>Head of Sales: +1 987 654321</p>
           </div>
         </div>
       </div>
 
       {/* Right Content - Contact Form */}
-      <div className="max-w-lg">
+      <div className="max-w-lg border-2 border-gray-700 rounded-lg p-4">
         <h1 className="text-2xl font-bold mb-4">Get in Touch</h1>
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="flex space-x-4">
-            <div className="w-1/2">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-1/2 lg:pr-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                 Name
               </label>
               <input
@@ -108,11 +105,8 @@ const ContactPage = () => {
                 required
               />
             </div>
-            <div className="w-1/2">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+            <div className="w-full lg:w-1/2 lg:pl-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email
               </label>
               <input
@@ -128,10 +122,7 @@ const ContactPage = () => {
             </div>
           </div>
           <div>
-            <label
-              htmlFor="subject"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
               Subject
             </label>
             <input
@@ -146,10 +137,7 @@ const ContactPage = () => {
             />
           </div>
           <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="message" className="block text-sm font-medium text-gray-700">
               Message
             </label>
             <textarea
