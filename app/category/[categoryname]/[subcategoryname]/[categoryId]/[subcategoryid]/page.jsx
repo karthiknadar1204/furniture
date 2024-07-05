@@ -8,8 +8,44 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+const predefinedCategories = [
+  { id: 1, name: "Bedroom" },
+  { id: 2, name: "Living Room" },
+  { id: 3, name: "Dining" },
+  { id: 4, name: "Office" },
+];
+
+const predefinedSubcategories = {
+  1: [
+    { id: 1, name: "Wardrobe" },
+    { id: 2, name: "Bed-side Table" },
+    { id: 3, name: "Bed" },
+    { id: 4, name: "Dresser" },
+    { id: 5, name: "Mattress" },
+  ],
+  2: [
+    { id: 6, name: "Sofa" },
+    { id: 7, name: "Sofa-cum-bed" },
+    { id: 8, name: "Multi-utility Cabinet" },
+    { id: 9, name: "Center Table" },
+    { id: 10, name: "Bookshelf" },
+  ],
+  3: [
+    { id: 11, name: "Kitchen Cabinet" },
+    { id: 12, name: "Dining Table" },
+  ],
+  4: [
+    { id: 13, name: "Office Table" },
+    { id: 14, name: "Office Chair" },
+    { id: 15, name: "Study Table" },
+    { id: 16, name: "Bookshelf" },
+    { id: 17, name: "Filing Cabinet" },
+  ],
+};
+
 const CategoryPage = () => {
   const [productsList, setProductsList] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -17,7 +53,13 @@ const CategoryPage = () => {
     const fetchProducts = async () => {
       try {
         const parts = pathname.split("/");
-        const categoryId = parseInt(parts[parts.length - 1], 10);
+        const categoryName = parts[2];
+        const category = predefinedCategories.find(cat => cat.name.toLowerCase() === categoryName.toLowerCase());
+        const categoryId = category ? category.id : null;
+        const subcategoryId = parseInt(parts[5], 10);
+
+        setSubcategories(predefinedSubcategories[categoryId] || []);
+
 
         const result = await db
           .select()
@@ -36,6 +78,20 @@ const CategoryPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-6">
+           {subcategories.length > 0 && (
+        <div className="flex space-x-4 mb-6">
+          {subcategories.map(subcategory => (
+            <Link 
+              key={subcategory.id} 
+              href={'/'}
+              passHref
+            >
+              <p className="m-1 text-black hover:underline">{subcategory.name}</p>
+            </Link>
+          ))}
+        </div>
+      )}
+      <hr className="w-full border-t border-gray-300 opacity-50 mb-6" />
       {productsList.length === 0 ? (
         <p className="text-xl font-semibold text-gray-600 mt-8">
           No products added yet.
