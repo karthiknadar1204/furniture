@@ -77,7 +77,7 @@ const CategoryPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center p-6">
-           {subcategories.length > 0 && (
+           {/* {subcategories.length > 0 && (
         <div className="flex space-x-4 mb-6">
           {subcategories.map(subcategory => (
             <Link 
@@ -89,7 +89,7 @@ const CategoryPage = () => {
             </Link>
           ))}
         </div>
-      )}
+      )} */}
       <hr className="w-full border-t border-gray-300 opacity-50 mb-6" />
       {productsList.length === 0 ? (
         <p className="text-xl font-semibold text-gray-600 mt-8">

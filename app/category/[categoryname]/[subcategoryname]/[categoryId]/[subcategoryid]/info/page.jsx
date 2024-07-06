@@ -63,7 +63,7 @@ const ProductInfo = () => {
   return (
     <div className="p-6 flex flex-col items-center mt-24">
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
-        <div className="w-full sm:w-96 h-96 relative sm:mr-6 mb-4 sm:mb-0">
+        <div className="order-2 sm:order-1 w-full sm:w-96 h-96 relative sm:mr-6 mb-4 sm:mb-0">
           <Carousel ref={carouselRef}>
             {images.map((image, index) => (
               <div key={index}>
@@ -95,7 +95,7 @@ const ProductInfo = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col items-center sm:items-start sm:ml-16">
+        <div className="order-1 sm:order-2 flex flex-col items-center sm:items-start sm:ml-16">
           <h2 className="text-5xl font-bold mb-2">{product.name}</h2>
           {product.stock > 0 ? (
             <span className="bg-green-200 text-green-800 text-sm font-semibold px-4 py-2 mb-2 mt-4">
