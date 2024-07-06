@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { BedDouble, Heart } from 'lucide-react';
-
 import { db } from '@/configs';
 import { products } from '@/configs/schema';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
 const BestSellers = () => {
@@ -18,8 +18,6 @@ const BestSellers = () => {
     const fetchProducts = async () => {
       try {
         const result = await db.select().from(products).where(eq(products.product_id, 1)).execute();
-
-        // Limiting to 4 products
         const limitedProducts = result.slice(0, 5);
         setProductsList(limitedProducts);
         console.log(limitedProducts);
@@ -38,7 +36,11 @@ const BestSellers = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-20">
         {productsList.map((product, index) => (
-          <div key={index} className="relative flex flex-col items-center">
+          <Link
+            key={index}
+            href={`/category/${product.category.toLowerCase()}/${product.subcategory.toLowerCase()}/${product.product_id}/${product.id}/info`}
+            className="relative flex flex-col items-center"
+          >
             <div className="w-48 h-48 relative">
               <Image
                 src={product.imageUrl}
@@ -53,7 +55,7 @@ const BestSellers = () => {
             </div>
             <h1 className="text-sm mt-2"><strong>{product.name}</strong></h1>
             <h1 className="text-sm mt-1">{product.price}</h1>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

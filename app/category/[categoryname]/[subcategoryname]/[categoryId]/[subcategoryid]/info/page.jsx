@@ -4,24 +4,25 @@ import { useRouter, usePathname } from "next/navigation";
 import { db } from '@/configs';
 import { products } from '@/configs/schema';
 import { eq } from 'drizzle-orm';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { Loader } from 'lucide-react';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const ProductInfo = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [product, setProduct] = useState(null);
+  const carouselRef = useRef(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // Extract the product id from the URL
         const parts = pathname.split('/');
-        const productId = parts[parts.length - 2]; // Assumes id is second to last in the URL
+        const productId = parts[parts.length - 2];
         console.log(productId);
 
-        // Fetch the product details using the product id
         const result = await db
           .select()
           .from(products)
@@ -47,17 +48,52 @@ const ProductInfo = () => {
     );
   }
 
+  const images = [
+    product.imageUrl || "/Sofa.jpg",
+    product.imageUrl || "/Sofa.jpg",
+    product.imageUrl || "/Sofa.jpg",
+  ];
+
+  const handleThumbnailClick = (index) => {
+    if (carouselRef.current) {
+      carouselRef.current.moveTo(index);
+    }
+  };
+
   return (
     <div className="p-6 flex flex-col items-center mt-24">
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
         <div className="w-full sm:w-96 h-96 relative sm:mr-6 mb-4 sm:mb-0">
-          <Image
-            src={product.imageUrl || "/Sofa.jpg"}
-            alt={product.name}
-            width={450}
-            height={450}
-            className="object-contain rounded-md"
-          />
+          <Carousel ref={carouselRef}>
+            {images.map((image, index) => (
+              <div key={index}>
+                <Image
+                  src={image}
+                  alt={product.name}
+                  width={450}
+                  height={450}
+                  className="object-contain rounded-md"
+                />
+              </div>
+            ))}
+          </Carousel>
+          <div className="flex justify-center mt-4 space-x-2">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="w-16 h-16 relative cursor-pointer border border-gray-300"
+                onClick={() => handleThumbnailClick(index)}
+              >
+                <Image
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-md"
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col items-center sm:items-start sm:ml-16">
           <h2 className="text-5xl font-bold mb-2">{product.name}</h2>

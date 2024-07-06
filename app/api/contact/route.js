@@ -55,7 +55,7 @@ export async function POST(request) {
         email,
         subject,
         message
-      }), // Provide necessary props if required
+      }),
     });
 
     if (error) {
