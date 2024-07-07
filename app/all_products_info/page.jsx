@@ -208,6 +208,7 @@ const AllProductsInfo = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold">{product.name}</h3>
+                    <p className='text-gray-500 text-sm'>{product.subcategory}</p>
                     <p className="text-base mb-2">Price: ${product.price}</p>
                     <p>
                       Stock:{' '}
