@@ -138,7 +138,7 @@ const Navbar = () => {
             <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Projects</Link>
             <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Media</Link>
             <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">About Us</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Contact Us</Link>
+            <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Contact Us</Link>
             <div className="flex justify-around py-3">
               <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
               <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />

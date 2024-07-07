@@ -33,8 +33,10 @@ import {
           />
           <Text style={paragraph}>Hi {name},</Text>
           <Text style={paragraph}>
-            Welcome to Koala, the sales intelligence platform that helps you
-            uncover qualified leads and close deals faster.{email}
+            {email}
+            Welcome to Alder Furnitures, the e-commerce platform that helps you
+            uncover and leads and close deals faster.
+            {message}
           </Text>
           <Section style={btnContainer}>
             <Button style={button} href="https://getkoala.com">
