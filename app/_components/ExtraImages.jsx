@@ -8,10 +8,10 @@ const ExtraImages = () => {
       <div className="relative mb-4">
         <Image src={"/sofa.jpg"} width={1050} height={1050} alt="First Image" className="w-full h-auto" />
         <div className="absolute top-0 left-0 p-2 sm:p-4 text-white font-bold m-2 sm:m-4 max-w-xs sm:max-w-sm">
-          <div className="text-base sm:text-lg md:text-xl lg:text-2xl">
+          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
             The Ideal Choice <br /> for Home & <br /> Office
           </div>
-          <div className="flex items-center mt-2 sm:mt-4 text-xs sm:text-sm lg:text-base">
+          <div className="flex items-center mt-2 sm:mt-4 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
             <span className="text-red-500">Shop Now</span>
             <ArrowRight className="text-red-500 ml-2" />
           </div>
