@@ -44,13 +44,11 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md w-full z-10 relative">
       <div className="container mx-auto px-6 py-9 flex justify-between items-center">
-        {/* Logo */}
         <div className="flex items-center">
           <Link href={'/'}>
             <Image src="/next.svg" alt="Logo" width={100} height={100} />
           </Link>
         </div>
-        {/* Menu Links */}
         <div className="hidden md:flex space-x-6">
           <Link href="/" className="text-gray-600 hover:text-gray-800">Home</Link>
           <DropdownMenu>
@@ -87,7 +85,6 @@ const Navbar = () => {
           <a href="#" className="text-gray-600 hover:text-gray-800">About Us</a>
           <Link href="/contact" className="text-gray-600 hover:text-gray-800">Contact Us</Link>
         </div>
-        {/* Icons, UserButton, and Dashboard Button for Admin */}
         <div className="hidden md:flex items-center space-x-4">
           <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
@@ -99,14 +96,12 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        {/* Hamburger Icon for Mobile */}
         <div className="md:hidden flex items-center space-x-4">
           <button onClick={toggleMenu} className="text-gray-600 hover:text-gray-800 focus:outline-none">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

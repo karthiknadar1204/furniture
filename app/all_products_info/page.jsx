@@ -35,8 +35,8 @@ const AllProductsInfo = () => {
   const [editedPrice, setEditedPrice] = useState(0);
   const [editedStock, setEditedStock] = useState(0);
   const [editedDescription, setEditedDescription] = useState('');
-  const [editedImageFile, setEditedImageFile] = useState(null); // State to hold the new image file
-  const [isLoading, setIsLoading] = useState(false); // State to track loading state
+  const [editedImageFile, setEditedImageFile] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleCategoryClick = async (category) => {
@@ -48,12 +48,10 @@ const AllProductsInfo = () => {
         .execute();
 
       if (result.length === 0) {
-        // If no products found, show "Add Products"
         setModalContent([{ id: 'addProducts', name: 'Add Products' }]);
         setSelectedCategory(category.name);
         setIsModalOpen(true);
       } else {
-        // Otherwise, show the products
         setModalContent(result);
         setSelectedCategory(category.name);
         setIsModalOpen(true);
@@ -70,7 +68,6 @@ const AllProductsInfo = () => {
         .where(eq(products.id, productId))
         .execute();
 
-      // Update modalContent state after deletion
       const updatedContent = modalContent.filter((product) => product.id !== productId);
       setModalContent(updatedContent);
     } catch (error) {
@@ -89,18 +86,16 @@ const AllProductsInfo = () => {
 
   const saveChanges = async () => {
     try {
-      setIsLoading(true); // Start loading
+      setIsLoading(true);
 
       let newImageUrl = editedProduct.imageUrl;
   
       if (editedImageFile) {
-        // Upload new image file
         const imageName = editedImageFile.name.split(".")[0];
         const storageRef = ref(Storage, imageName);
   
         const uploadTask = uploadBytesResumable(storageRef, editedImageFile);
   
-        // Wait for the upload to complete and get the download URL
         const snapshot = await new Promise((resolve, reject) => {
           uploadTask.on(
             "state_changed",
@@ -115,7 +110,6 @@ const AllProductsInfo = () => {
         newImageUrl = snapshot;
       }
   
-      // Update product details in the database
       await db
         .update(products)
         .set({
@@ -123,12 +117,11 @@ const AllProductsInfo = () => {
           price: editedPrice,
           stock: editedStock,
           description: editedDescription,
-          imageUrl: newImageUrl // Use the new image URL
+          imageUrl: newImageUrl
         })
         .where(eq(products.id, editedProduct.id))
         .execute();
   
-      // Update modalContent state after editing
       const updatedContent = modalContent.map((product) =>
         product.id === editedProduct.id
           ? {
@@ -146,7 +139,7 @@ const AllProductsInfo = () => {
     } catch (error) {
       console.error("Error updating product:", error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -175,7 +168,6 @@ const AllProductsInfo = () => {
         ))}
       </div>
 
-      {/* Custom Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white p-6 max-w-lg rounded-lg shadow-md">
@@ -247,7 +239,6 @@ const AllProductsInfo = () => {
         </div>
       )}
 
-      {/* Edit Modal */}
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative bg-white p-6 max-w-lg rounded-lg shadow-md">

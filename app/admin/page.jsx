@@ -225,18 +225,11 @@ const Page = () => {
                     onChange={handleNameChange}
                     className="w-full"
                   />
-                  {/* <Input
-                    type="text"
-                    placeholder="Product Description"
-                    value={productDescription}
-                    onChange={handleDescriptionChange}
-                    className="w-full"
-                  /> */}
                   <Textarea
-                    placeholder="Product Description" // Using Textarea instead of Input
+                    placeholder="Product Description" 
                     value={productDescription}
                     onChange={handleDescriptionChange}
-                    className="w-full" // Responsive styling
+                    className="w-full" 
                   />
                   <Input
                     type="number"
@@ -252,8 +245,6 @@ const Page = () => {
                     onChange={handleStockChange}
                     className="w-full"
                   />
-
-                  {/* Image upload section */}
                   <div className="flex flex-col gap-4">
                     <p className="text-xl font-bold">Upload Image</p>
                     <div className="flex gap-2">

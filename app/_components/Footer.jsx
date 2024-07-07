@@ -6,7 +6,6 @@ const Footer = () => {
   return (
     <footer className="text-black py-8">
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {/* First Row */}
         <div className="col-span-1 sm:col-span-1 md:col-span-1 relative">
           <h3 className="text-sm font-bold mb-4">Address</h3>
           <p className="text-sm">123 Main St</p>
@@ -14,7 +13,6 @@ const Footer = () => {
           <p className="text-sm">Postal Code</p>
           <hr className="absolute h-full left-1/2 top-0 transform -translate-x-1/2 bg-gray-300 bg-opacity-50 w-0.5" />
         </div>
-        {/* Second Row */}
         <div className="col-span-1 sm:col-span-1 md:col-span-1 relative">
           <h3 className="text-sm font-bold mb-4">Resources</h3>
           <ul>
@@ -25,7 +23,6 @@ const Footer = () => {
             <li><a href="#" className="block text-sm py-1">Warrant Policy</a></li>
           </ul>
         </div>
-        {/* Third Row */}
         <div className="col-span-1 sm:col-span-1 md:col-span-1 relative">
           <h3 className="text-sm font-bold mb-4">Quick Links</h3>
           <ul>
@@ -35,7 +32,6 @@ const Footer = () => {
             <li><a href="#" className="block text-sm py-1">Contact us</a></li>
           </ul>
         </div>
-        {/* Fourth Row */}
         <div className="col-span-1 sm:col-span-1 md:col-span-1 relative">
           <h3 className="text-sm font-bold mb-4">Need Help</h3>
           <ul>
@@ -48,7 +44,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Row */}
       <div className="mt-8 flex items-center justify-between px-4 ml-10">
         <div className="flex items-center">
           <Image src={'/next.svg'} alt="Logo" width={100} height={100} className="h-8 mr-4" />

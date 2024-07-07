@@ -15,7 +15,6 @@ export function  checkUserRole(session) {
 
   const organizationMemberships = session.user.organizationMemberships;
 
-  // Loop through all organization memberships
   for (const membership of organizationMemberships) {
       if (membership.role) {
           console.log("Found role:", membership.role);
