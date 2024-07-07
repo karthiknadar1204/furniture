@@ -100,7 +100,6 @@ const ContactPage = () => {
           <div className="w-full lg:w-1/2">
             <p className="font-bold">Landline</p>
             <p>+1 234 567890</p>
-            <p>Head of Sales: +1 987 654321</p>
           </div>
         </div>
       <div className="flex flex-wrap mb-4">

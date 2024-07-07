@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { Loader } from "lucide-react";
 
 const predefinedCategories = [
   { id: 1, name: "Bedroom" },
@@ -46,33 +45,33 @@ const predefinedSubcategories = {
 const CategoryPage = () => {
   const [productsList, setProductsList] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const pathname = usePathname();
   const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
       try {
         const parts = pathname.split("/");
-        const categoryName = parts[2];
-        const category = predefinedCategories.find(cat => cat.name.toLowerCase() === categoryName.toLowerCase());
+        const categoryName = parts[2].toLowerCase();
+        const category = predefinedCategories.find(cat => cat.name.toLowerCase().replace(/\s+/g, '') === categoryName);
         const categoryId = category ? category.id : null;
         const subcategoryId = parseInt(parts[5], 10);
+
+        console.log("Category ID:", categoryId);
 
         setSubcategories(predefinedSubcategories[categoryId] || []);
 
         const result = await db
           .select()
           .from(products)
-          .where(eq(products.product_id, categoryId))
+          .where(eq(products.product_id, subcategoryId))
           .execute();
+
+        console.log("Fetched products:", result);
 
         setProductsList(result);
       } catch (error) {
         console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -82,11 +81,7 @@ const CategoryPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center p-6">
       <hr className="w-full border-t border-gray-300 opacity-50 mb-6" />
-      {loading ? (
-        <div className="flex justify-center items-center h-full">
-          <Loader className="w-12 h-12 animate-spin text-gray-600" />
-        </div>
-      ) : productsList.length === 0 ? (
+      {productsList.length === 0 ? (
         <p className="text-xl font-semibold text-gray-600 mt-8">
           No products added yet.
         </p>

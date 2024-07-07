@@ -24,8 +24,8 @@ import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '@/utils/UserUtils';
 
 const predefinedCategories = [
-  { id: 1, name: 'Bedroom', subcategories: [{ id: 1, name: 'Wardrobe' }, { id: 2, name: 'Bed-side Table' }, { id: 3, name: 'Bed' }, { id: 4, name: 'Dresser' }, { id: 5, name: 'Mattress' }] },
-  { id: 2, name: 'Living Room', subcategories: [{ id: 6, name: 'Sofa' }, { id: 7, name: 'Sofa-cum-bed' }, { id: 8, name: 'Multi-utility Cabinet' }, { id: 9, name: 'Center Table' }, { id: 10, name: 'Bookshelf' }] },
+  { id: 1, name: 'Bedroom', subcategories: [{ id: 1, name: 'Wardrobe' }, { id: 2, name: 'BedsideTable' }, { id: 3, name: 'Bed' }, { id: 4, name: 'Dresser' }, { id: 5, name: 'Mattress' }] },
+  { id: 2, name: 'LivingRoom', subcategories: [{ id: 6, name: 'Sofa' }, { id: 7, name: 'Sofacumbed' }, { id: 8, name: 'Multi-utility Cabinet' }, { id: 9, name: 'Center Table' }, { id: 10, name: 'Bookshelf' }] },
   { id: 3, name: 'Dining', subcategories: [{ id: 11, name: 'Kitchen Cabinet' }, { id: 12, name: 'Dining Table' }] },
   { id: 4, name: 'Office', subcategories: [{ id: 13, name: 'Office Table' }, { id: 14, name: 'Office Chair' }, { id: 15, name: 'Study Table' }, { id: 16, name: 'Bookshelf' }, { id: 17, name: 'Filing Cabinet' }] },
 ];
