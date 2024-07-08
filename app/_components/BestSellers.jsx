@@ -43,7 +43,7 @@ const BestSellers = () => {
           >
             <div className="w-48 h-48 relative">
               <Image
-                src={product.imageUrl}
+                src={product.imageUrl[0]}
                 alt={product.name}
                 layout="fill"
                 objectFit="cover"
