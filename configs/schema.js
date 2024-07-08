@@ -9,5 +9,6 @@ export const products = pgTable('products', {
   price: integer('price').notNull(),
   stock: integer('stock').notNull(),
   product_id: integer('product_id').notNull(),
-  imageUrl: varchar('imageUrl', 255)
+  imageUrl: varchar('imageUrl', 255) .array()
 });
+ 

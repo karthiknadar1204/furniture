@@ -199,7 +199,7 @@ const AllProductsInfo = () => {
                 <div key={product.id} className="flex items-center border rounded-md p-4 mb-4">
                   <div className="w-24 h-24 mr-4 relative">
                     <Image
-                      src={product.imageUrl || "/Sofa.jpg"}
+                      src={product.imageUrl[0] || "/Sofa.jpg"}
                       alt={product.name}
                       layout="fill"
                       objectFit="cover"

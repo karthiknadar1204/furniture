@@ -106,7 +106,7 @@ const CategoryPage = () => {
                       passHref
                     >
                       <Image
-                        src={product.imageUrl || "/Sofa.jpg"}
+                        src={product.imageUrl[0] || "/Sofa.jpg"}
                         alt={product.name}
                         layout="fill"
                         objectFit="cover"
