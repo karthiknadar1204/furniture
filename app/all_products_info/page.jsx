@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { db } from '@/configs';
-import { products } from '@/configs/schema';
-import { eq } from 'drizzle-orm';
-import Image from 'next/image';
-import { PencilOff, Trash2 } from 'lucide-react';
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { db } from "@/configs";
+import { products } from "@/configs/schema";
+import { eq } from "drizzle-orm";
+import Image from "next/image";
+import { PencilOff, Trash2 } from "lucide-react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { Storage } from "@/firebase";
 
 const categories = [
-  { id: 1, name: 'Living Room' },
-  { id: 2, name: 'Bedroom' },
-  { id: 3, name: 'Kitchen' },
-  { id: 4, name: 'Bathroom' }
+  { id: 1, name: "Living Room" },
+  { id: 2, name: "Bedroom" },
+  { id: 3, name: "Kitchen" },
+  { id: 4, name: "Bathroom" },
 ];
 
 const AllProductsInfo = () => {
@@ -25,17 +25,17 @@ const AllProductsInfo = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [editedProduct, setEditedProduct] = useState({
     id: null,
-    name: '',
+    name: "",
     price: 0,
     stock: 0,
-    description: '',
-    imageUrl: ''
+    description: "",
+    imageUrl: "",
   });
-  const [editedName, setEditedName] = useState('');
+  const [editedName, setEditedName] = useState("");
   const [editedPrice, setEditedPrice] = useState(0);
   const [editedStock, setEditedStock] = useState(0);
-  const [editedDescription, setEditedDescription] = useState('');
-  const [editedImageFile, setEditedImageFile] = useState(null); 
+  const [editedDescription, setEditedDescription] = useState("");
+  const [editedImageFile, setEditedImageFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -47,8 +47,10 @@ const AllProductsInfo = () => {
         .where(eq(products.category, category.name))
         .execute();
 
+      console.log(result)
+
       if (result.length === 0) {
-        setModalContent([{ id: 'addProducts', name: 'Add Products' }]);
+        setModalContent([{ id: "addProducts", name: "Add Products" }]);
         setSelectedCategory(category.name);
         setIsModalOpen(true);
       } else {
@@ -63,12 +65,11 @@ const AllProductsInfo = () => {
 
   const deleteProduct = async (productId) => {
     try {
-      await db
-        .delete(products)
-        .where(eq(products.id, productId))
-        .execute();
+      await db.delete(products).where(eq(products.id, productId)).execute();
 
-      const updatedContent = modalContent.filter((product) => product.id !== productId);
+      const updatedContent = modalContent.filter(
+        (product) => product.id !== productId
+      );
       setModalContent(updatedContent);
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -89,27 +90,29 @@ const AllProductsInfo = () => {
       setIsLoading(true);
 
       let newImageUrl = editedProduct.imageUrl;
-  
+
       if (editedImageFile) {
         const imageName = editedImageFile.name.split(".")[0];
         const storageRef = ref(Storage, imageName);
-  
+
         const uploadTask = uploadBytesResumable(storageRef, editedImageFile);
-  
+
         const snapshot = await new Promise((resolve, reject) => {
           uploadTask.on(
             "state_changed",
             () => {},
             reject,
             () => {
-              getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then(resolve)
+                .catch(reject);
             }
           );
         });
-  
+
         newImageUrl = snapshot;
       }
-  
+
       await db
         .update(products)
         .set({
@@ -117,11 +120,11 @@ const AllProductsInfo = () => {
           price: editedPrice,
           stock: editedStock,
           description: editedDescription,
-          imageUrl: newImageUrl
+          imageUrl: newImageUrl,
         })
         .where(eq(products.id, editedProduct.id))
         .execute();
-  
+
       const updatedContent = modalContent.map((product) =>
         product.id === editedProduct.id
           ? {
@@ -130,7 +133,7 @@ const AllProductsInfo = () => {
               price: editedPrice,
               stock: editedStock,
               description: editedDescription,
-              imageUrl: newImageUrl
+              imageUrl: newImageUrl,
             }
           : product
       );
@@ -148,6 +151,7 @@ const AllProductsInfo = () => {
     setModalContent([]);
     setSelectedCategory(null);
   };
+  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -192,11 +196,16 @@ const AllProductsInfo = () => {
               </svg>
             </button>
 
-            <h2 className="text-xl font-bold mb-4">{selectedCategory} Products</h2>
+            <h2 className="text-xl font-bold mb-4">
+              {selectedCategory} Products
+            </h2>
 
             <div className="grid grid-cols-1 gap-4">
               {modalContent.map((product) => (
-                <div key={product.id} className="flex items-center border rounded-md p-4 mb-4">
+                <div
+                  key={product.id}
+                  className="flex items-center border rounded-md p-4 mb-4"
+                >
                   <div className="w-24 h-24 mr-4 relative">
                     <Image
                       src={product.imageUrl[0] || "/Sofa.jpg"}
@@ -208,10 +217,12 @@ const AllProductsInfo = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold">{product.name}</h3>
-                    <p className='text-gray-500 text-sm'>{product.subcategory}</p>
+                    <p className="text-gray-500 text-sm">
+                      {product.subcategory}
+                    </p>
                     <p className="text-base mb-2">Price: ${product.price}</p>
                     <p>
-                      Stock:{' '}
+                      Stock:{" "}
                       {product.stock > 0 ? (
                         <span className="text-green-500">In Stock</span>
                       ) : (
@@ -270,7 +281,7 @@ const AllProductsInfo = () => {
               <div className="flex items-center border rounded-md p-4 mb-4">
                 <div className="w-24 h-24 mr-4 relative">
                   <Image
-                    src={editedProduct.imageUrl || "/Sofa.jpg"}
+                    src={editedProduct.imageUrl[0] || "/Sofa.jpg"}
                     alt={editedProduct.name}
                     layout="fill"
                     objectFit="cover"
@@ -280,7 +291,9 @@ const AllProductsInfo = () => {
                 <div>
                   <h3 className="text-lg font-bold">{editedProduct.name}</h3>
                   <div className="mt-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Name
+                    </label>
                     <input
                       type="text"
                       value={editedName}
@@ -289,7 +302,9 @@ const AllProductsInfo = () => {
                     />
                   </div>
                   <div className="mt-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Price
+                    </label>
                     <input
                       type="number"
                       value={editedPrice}
@@ -298,7 +313,9 @@ const AllProductsInfo = () => {
                     />
                   </div>
                   <div className="mt-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Stock
+                    </label>
                     <input
                       type="number"
                       value={editedStock}
@@ -307,7 +324,9 @@ const AllProductsInfo = () => {
                     />
                   </div>
                   <div className="mt-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Description
+                    </label>
                     <textarea
                       value={editedDescription}
                       onChange={(e) => setEditedDescription(e.target.value)}
@@ -315,7 +334,9 @@ const AllProductsInfo = () => {
                     />
                   </div>
                   <div className="mt-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Upload New Image</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Upload New Image
+                    </label>
                     <input
                       type="file"
                       accept="image/*"
@@ -336,9 +357,25 @@ const AllProductsInfo = () => {
                       disabled={isLoading}
                     >
                       {isLoading ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V2.5a.5.5 0 011 0V4a8 8 0 01-8 8z"></path>
+                        <svg
+                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V2.5a.5.5 0 011 0V4a8 8 0 01-8 8z"
+                          ></path>
                         </svg>
                       ) : (
                         <span>Save Changes</span>
