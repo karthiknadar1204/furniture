@@ -30,12 +30,18 @@ const AllProductsInfo = () => {
     stock: 0,
     description: "",
     imageUrl: "",
+    length: 0,
+    breadth: 0,
+    height: 0,
   });
   const [editedName, setEditedName] = useState("");
   const [editedPrice, setEditedPrice] = useState(0);
   const [editedStock, setEditedStock] = useState(0);
   const [editedDescription, setEditedDescription] = useState("");
   const [editedImageFile, setEditedImageFile] = useState(null);
+  const [editedLength, setEditedLength] = useState(0);
+  const [editedBreadth, setEditedBreadth] = useState(0);
+  const [editedHeight, setEditedHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -46,8 +52,6 @@ const AllProductsInfo = () => {
         .from(products)
         .where(eq(products.category, category.name))
         .execute();
-
-      console.log(result)
 
       if (result.length === 0) {
         setModalContent([{ id: "addProducts", name: "Add Products" }]);
@@ -82,6 +86,9 @@ const AllProductsInfo = () => {
     setEditedPrice(product.price);
     setEditedStock(product.stock);
     setEditedDescription(product.description);
+    setEditedLength(product.length || 0);
+    setEditedBreadth(product.breadth || 0);
+    setEditedHeight(product.height || 0);
     setIsEditModalOpen(true);
   };
 
@@ -121,6 +128,9 @@ const AllProductsInfo = () => {
           stock: editedStock,
           description: editedDescription,
           imageUrl: newImageUrl,
+          length: editedLength,
+          breadth: editedBreadth,
+          height: editedHeight,
         })
         .where(eq(products.id, editedProduct.id))
         .execute();
@@ -134,6 +144,9 @@ const AllProductsInfo = () => {
               stock: editedStock,
               description: editedDescription,
               imageUrl: newImageUrl,
+              length: editedLength,
+              breadth: editedBreadth,
+              height: editedHeight,
             }
           : product
       );
@@ -151,7 +164,6 @@ const AllProductsInfo = () => {
     setModalContent([]);
     setSelectedCategory(null);
   };
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -330,6 +342,39 @@ const AllProductsInfo = () => {
                     <textarea
                       value={editedDescription}
                       onChange={(e) => setEditedDescription(e.target.value)}
+                      className="border border-gray-300 rounded-md p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Length
+                    </label>
+                    <input
+                      type="number"
+                      value={editedLength}
+                      onChange={(e) => setEditedLength(e.target.value)}
+                      className="border border-gray-300 rounded-md p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Breadth
+                    </label>
+                    <input
+                      type="number"
+                      value={editedBreadth}
+                      onChange={(e) => setEditedBreadth(e.target.value)}
+                      className="border border-gray-300 rounded-md p-2 w-full"
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Height
+                    </label>
+                    <input
+                      type="number"
+                      value={editedHeight}
+                      onChange={(e) => setEditedHeight(e.target.value)}
                       className="border border-gray-300 rounded-md p-2 w-full"
                     />
                   </div>
