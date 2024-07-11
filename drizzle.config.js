@@ -3,6 +3,6 @@ export default {
     schema: "./configs/schema.js",
     dialect: 'postgresql',
     dbCredentials: {
-      url: 'postgresql://karthiknadar1204:Fvph9DyfVm2L@ep-restless-credit-a1c7489o.ap-southeast-1.aws.neon.tech/Furniture_2.0?sslmode=require',
+      url: 'postgresql://karthiknadar1204:Fvph9DyfVm2L@ep-restless-credit-a1c7489o.ap-southeast-1.aws.neon.tech/Furniture_3.0?sslmode=requiree',
     }
   };

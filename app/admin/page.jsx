@@ -1,6 +1,7 @@
 "use client";
-// import { useRouter } from "next/navigation";
+
 // import React, { useState, useRef } from "react";
+// import { useRouter } from "next/navigation";
 // import {
 //   Dialog,
 //   DialogContent,
@@ -66,9 +67,8 @@
 
 // const Page = () => {
 //   const router = useRouter();
-
-//   const [image, setImage] = useState(null);
-//   const [imagePreview, setImagePreview] = useState(null);
+//   const [images, setImages] = useState([]);
+//   const [imagePreviews, setImagePreviews] = useState([]);
 //   const buttonRef = useRef(null);
 
 //   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
@@ -77,6 +77,7 @@
 //   const [productPrice, setProductPrice] = useState("");
 //   const [productStock, setProductStock] = useState("");
 //   const [loading, setLoading] = useState(false);
+//   const [imagesUploaded, setImagesUploaded] = useState(false);
 
 //   const handleViewClick = () => {
 //     router.push("/all_products_info");
@@ -129,12 +130,16 @@
 //       return;
 //     }
 
-//     const imageName = image.name.split(".")[0];
-//     const storageRef = ref(Storage, imageName);
+//     const imageUploadPromises = images.map((image) => {
+//       const imageName = image.name.split(".")[0];
+//       const storageRef = ref(Storage, imageName);
+//       return uploadBytesResumable(storageRef, image).then(() =>
+//         getDownloadURL(storageRef)
+//       );
+//     });
 
 //     try {
-//       await uploadBytesResumable(storageRef, image);
-//       const downloadURL = await getDownloadURL(storageRef);
+//       const imageUrls = await Promise.all(imageUploadPromises);
 
 //       const product = {
 //         id: uuidv4(),
@@ -145,7 +150,7 @@
 //         price: parseInt(productPrice, 10),
 //         stock: parseInt(productStock, 10),
 //         product_id: selectedSubcategory.id,
-//         imageUrl: downloadURL,
+//         imageUrl: imageUrls,
 //       };
 
 //       const result = await db.insert(products).values(product);
@@ -166,14 +171,19 @@
 //   };
 
 //   const handleChange = (e) => {
-//     const file = e.target.files[0];
-//     setImage(file);
-//     setImagePreview(URL.createObjectURL(file));
+//     const files = Array.from(e.target.files).slice(0, 3);
+//     setImages(files);
+//     setImagePreviews(files.map((file) => URL.createObjectURL(file)));
+//     setImagesUploaded(true);
+//     console.log(files);
 //   };
 
-//   const deleteImage = () => {
-//     setImage(null);
-//     setImagePreview(null);
+//   const deleteImage = (index) => {
+//     setImages(images.filter((_, i) => i !== index));
+//     setImagePreviews(imagePreviews.filter((_, i) => i !== index));
+//     if (images.length === 1) {
+//       setImagesUploaded(false);
+//     }
 //   };
 
 //   return (
@@ -246,59 +256,52 @@
 //                     className="w-full"
 //                   />
 //                   <div className="flex flex-col gap-4">
-//                     <p className="text-xl font-bold">Upload Image</p>
-//                     <div className="flex gap-2">
-//                       {imagePreview ? (
-//                         <div className="flex flex-col gap-2">
-//                           <div className="relative">
-//                             <Image
-//                               alt="image preview"
-//                               width={280}
-//                               height={200}
-//                               className="rounded-xl w-[200px] h-[200px] object-cover"
-//                               src={imagePreview}
-//                             />
-//                             <button
-//                               className="absolute top-2 right-2 bg-red-200/10 p-2 rounded-lg text-red-400"
-//                               onClick={deleteImage}
-//                             >
-//                               <TrashIcon className="w-6 h-6" />
-//                             </button>
-//                           </div>
-//                         </div>
-//                       ) : (
-//                         <>
-//                           <label htmlFor="upload-image">
-//                             <button
-//                               type="button"
-//                               className="border-dashed border-2 border-slate-400 p-20 text-slate-400 rounded-2xl"
-//                               onClick={() => {
-//                                 buttonRef.current?.click();
-//                               }}
-//                             >
-//                               <PlusIcon className="w-10 h-10" />
-//                             </button>
-//                           </label>
-//                           <input
-//                             id="upload-image"
-//                             type="file"
-//                             accept="image/png, image/gif, image/jpeg"
-//                             className="hidden"
-//                             ref={buttonRef}
-//                             onChange={handleChange}
+//                     <p className="text-xl font-bold">Upload Images (up to 3)</p>
+//                     <div className="flex gap-2 flex-wrap">
+//                       {imagePreviews.map((preview, index) => (
+//                         <div key={index} className="relative">
+//                           <Image
+//                             src={preview}
+//                             alt={`Preview ${index + 1}`}
+//                             width={100}
+//                             height={100}
+//                             className="object-cover"
 //                           />
-//                         </>
+//                           <button
+//                             type="button"
+//                             className="absolute top-0 right-0 p-1 bg-red-500 rounded-full"
+//                             onClick={() => deleteImage(index)}
+//                           >
+//                             <TrashIcon className="h-5 w-5 text-white" />
+//                           </button>
+//                         </div>
+//                       ))}
+//                       {images.length < 3 && (
+//                         <label className="cursor-pointer">
+//                           <div className="w-24 h-24 flex items-center justify-center border-2 border-dashed border-gray-300">
+//                             <PlusIcon className="h-10 w-10 text-gray-300" />
+//                           </div>
+//                           <input
+//                             type="file"
+//                             onChange={handleChange}
+//                             className="hidden"
+//                             accept="image/*"
+//                             multiple
+//                           />
+//                         </label>
 //                       )}
 //                     </div>
 //                   </div>
-
-//                   <Button type="submit" className="w-full" disabled={loading}>
+//                   <Button
+//                     type="submit"
+//                     className="w-full"
+//                     ref={buttonRef}
+//                     disabled={!imagesUploaded || loading}
+//                   >
 //                     {loading ? (
-//                       <div className="flex items-center justify-center h-12">
-//                         <Loader className="animate-spin" />
-//                       </div>
+//                       <Loader className="animate-spin h-5 w-5" />
 //                     ) : (
-//                       "Submit"
+//                       "Add Product"
 //                     )}
 //                   </Button>
 //                 </form>
@@ -318,11 +321,6 @@
 // };
 
 // export default Page;
-
-
-
-
-
 
 
 
@@ -410,6 +408,9 @@ const Page = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
+  const [productLength, setProductLength] = useState(""); // New state for length
+  const [productBreadth, setProductBreadth] = useState(""); // New state for breadth
+  const [productHeight, setProductHeight] = useState(""); // New state for height
   const [loading, setLoading] = useState(false);
   const [imagesUploaded, setImagesUploaded] = useState(false);
 
@@ -438,6 +439,18 @@ const Page = () => {
 
   const handleStockChange = (e) => {
     setProductStock(e.target.value);
+  };
+
+  const handleLengthChange = (e) => {
+    setProductLength(e.target.value);
+  };
+
+  const handleBreadthChange = (e) => {
+    setProductBreadth(e.target.value);
+  };
+
+  const handleHeightChange = (e) => {
+    setProductHeight(e.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -485,6 +498,9 @@ const Page = () => {
         stock: parseInt(productStock, 10),
         product_id: selectedSubcategory.id,
         imageUrl: imageUrls,
+        length: parseInt(productLength, 10), // Include length
+        breadth: parseInt(productBreadth, 10), // Include breadth
+        height: parseInt(productHeight, 10), // Include height
       };
 
       const result = await db.insert(products).values(product);
@@ -589,6 +605,29 @@ const Page = () => {
                     onChange={handleStockChange}
                     className="w-full"
                   />
+                  {/* New input fields for length, breadth, and height */}
+                  <Input
+                    type="number"
+                    placeholder="Length (cm)"
+                    value={productLength}
+                    onChange={handleLengthChange}
+                    className="w-full"
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Breadth (cm)"
+                    value={productBreadth}
+                    onChange={handleBreadthChange}
+                    className="w-full"
+                  />
+                  <Input
+                    type="number"
+                    placeholder="Height (cm)"
+                    value={productHeight}
+                    onChange={handleHeightChange}
+                    className="w-full"
+                  />
+                  {/* End of new input fields */}
                   <div className="flex flex-col gap-4">
                     <p className="text-xl font-bold">Upload Images (up to 3)</p>
                     <div className="flex gap-2 flex-wrap">

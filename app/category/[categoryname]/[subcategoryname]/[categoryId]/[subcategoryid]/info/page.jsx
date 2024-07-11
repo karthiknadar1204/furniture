@@ -110,12 +110,18 @@ const ProductInfo = () => {
           <p className="text-sm mt-4">SKU: {product.id}</p>
           <p className="text-sm mt-2">Category: {product.category}</p>
           <p className="text-sm mt-2">Subcategory: {product.subcategory}</p>
+          <hr className="w-60 border-t border-gray-400 opacity-50 mt-4"/>
+          {/* Displaying dimensions */}
+          <p className="text-sm mt-2">Dimensions:</p>
+          <p className="text-sm mt-2">Length: {product.length} cm</p>
+          <p className="text-sm mt-2">Width: {product.breadth} cm</p>
+          <p className="text-sm mt-2">Height: {product.height} cm</p>
         </div>
       </div>
-      <div className="w-full sm:w-3/4 lg:w-2/3 mt-36"> {/* Adjusted margin-top here */}
+      <div className="w-full sm:w-3/4 lg:w-2/3 mt-36"> 
         <h1 className="text-left text-2xl font-bold">Description</h1>
         <hr className="w-full border-t border-gray-400 opacity-50 mt-2"/>
-        <p className="mt-8 text-lg text-left">{product.description}</p> {/* Increased margin-top here */}
+        <p className="mt-8 text-lg text-left">{product.description}</p>
       </div>
     </div>
   );
