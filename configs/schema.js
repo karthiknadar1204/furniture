@@ -10,7 +10,7 @@ export const products = pgTable('products', {
   stock: integer('stock').notNull(),
   product_id: integer('product_id').notNull(),
   imageUrl: varchar('imageUrl', 255).array(),
-  length: integer('length').notNull(), // Ensure this matches your database schema
-  breadth: integer('breadth').notNull(), // Ensure this matches your database schema
-  height: integer('height').notNull(), // Ensure this matches your database schema
+  length: integer('length').notNull(),
+  breadth: integer('breadth').notNull(), 
+  height: integer('height').notNull(), 
 });
