@@ -1,4 +1,3 @@
-// FilterComponent.js
 import React, { useState } from 'react';
 import Slider from 'react-slider';
 
