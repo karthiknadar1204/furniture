@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { toast } from "react-toastify";
 import { db } from "@/configs";
 import { products } from "@/configs/schema";
