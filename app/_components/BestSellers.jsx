@@ -20,7 +20,6 @@ const BestSellers = () => {
         const result = await db.select().from(products).where(eq(products.product_id, 1)).execute();
         const limitedProducts = result.slice(0, 5);
         setProductsList(limitedProducts);
-        console.log(limitedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
       }

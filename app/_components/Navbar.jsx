@@ -32,7 +32,6 @@ const predefinedCategories = [
 
 const Navbar = () => {
   const { session } = useSession();
-  console.log("Session object:", session); 
   const userRole = checkUserRole(session);
 
   const [isOpen, setIsOpen] = useState(false);

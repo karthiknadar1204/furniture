@@ -1,7 +1,6 @@
 
 console.log("UserUtils.js loaded."); 
 export function  checkUserRole(session) {
-  console.log("Checking user role with session:", session);
 
   if (
       !session ||
@@ -9,7 +8,6 @@ export function  checkUserRole(session) {
       !session.user.organizationMemberships ||
       session.user.organizationMemberships.length === 0
   ) {
-      console.log("User or organization memberships not found.");
       return null;
   }
 
@@ -17,7 +15,6 @@ export function  checkUserRole(session) {
 
   for (const membership of organizationMemberships) {
       if (membership.role) {
-          console.log("Found role:", membership.role);
           return membership.role.toLowerCase();
       }
   }

@@ -44,14 +44,11 @@ const ContactPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log('Email sent successfully:', data);
         setStatus('Email sent successfully');
       } else {
-        console.error('Error sending email:', data);
         setStatus('Error sending email');
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
       setStatus('Error submitting form');
     } finally {
       setLoading(false);

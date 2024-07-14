@@ -21,7 +21,6 @@ const ProductInfo = () => {
       try {
         const parts = pathname.split('/');
         const productId = parts[parts.length - 2];
-        console.log(productId);
 
         const result = await db
           .select()

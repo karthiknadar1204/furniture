@@ -76,9 +76,9 @@ const Page = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
-  const [productLength, setProductLength] = useState(""); // New state for length
-  const [productBreadth, setProductBreadth] = useState(""); // New state for breadth
-  const [productHeight, setProductHeight] = useState(""); // New state for height
+  const [productLength, setProductLength] = useState(""); 
+  const [productBreadth, setProductBreadth] = useState(""); 
+  const [productHeight, setProductHeight] = useState(""); 
   const [loading, setLoading] = useState(false);
   const [imagesUploaded, setImagesUploaded] = useState(false);
 
@@ -126,7 +126,6 @@ const Page = () => {
     setLoading(true);
 
     if (!selectedSubcategory) {
-      console.error("Subcategory not selected");
       toast("Subcategory not selected");
       setLoading(false);
       return;
@@ -139,7 +138,6 @@ const Page = () => {
     );
 
     if (!category) {
-      console.error("Category not found for selected subcategory");
       toast("Category not found for selected subcategory");
       setLoading(false);
       return;
@@ -166,22 +164,19 @@ const Page = () => {
         stock: parseInt(productStock, 10),
         product_id: selectedSubcategory.id,
         imageUrl: imageUrls,
-        length: parseInt(productLength, 10), // Include length
-        breadth: parseInt(productBreadth, 10), // Include breadth
-        height: parseInt(productHeight, 10), // Include height
+        length: parseInt(productLength, 10),
+        breadth: parseInt(productBreadth, 10),
+        height: parseInt(productHeight, 10),
       };
 
       const result = await db.insert(products).values(product);
 
       if (result) {
-        console.log("Product added successfully");
         toast("Product added successfully");
       } else {
-        console.error("Failed to add product");
         toast("Failed to add product");
       }
     } catch (error) {
-      console.error("An error occurred:", error);
       toast("An error occurred");
     } finally {
       setLoading(false);
@@ -193,7 +188,6 @@ const Page = () => {
     setImages(files);
     setImagePreviews(files.map((file) => URL.createObjectURL(file)));
     setImagesUploaded(true);
-    console.log(files);
   };
 
   const deleteImage = (index) => {

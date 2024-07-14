@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { db } from "@/configs";
@@ -212,7 +212,7 @@ const AllProductsInfo = () => {
               {selectedCategory} Products
             </h2>
 
-            <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 gap-4 max-h-96 overflow-y-auto">
               {modalContent.map((product) => (
                 <div
                   key={product.id}
@@ -265,7 +265,7 @@ const AllProductsInfo = () => {
 
       {isEditModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative bg-white p-6 max-w-lg rounded-lg shadow-md">
+          <div className="relative bg-white p-6 max-w-lg max-h-[80vh] rounded-lg shadow-md overflow-y-auto">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={() => setIsEditModalOpen(false)}
@@ -300,9 +300,9 @@ const AllProductsInfo = () => {
                 <input
                   type="text"
                   id="name"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedName}
                   onChange={(e) => setEditedName(e.target.value)}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -316,9 +316,9 @@ const AllProductsInfo = () => {
                 <input
                   type="number"
                   id="price"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedPrice}
-                  onChange={(e) => setEditedPrice(e.target.value)}
+                  onChange={(e) => setEditedPrice(parseFloat(e.target.value))}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -332,9 +332,9 @@ const AllProductsInfo = () => {
                 <input
                   type="number"
                   id="stock"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedStock}
-                  onChange={(e) => setEditedStock(e.target.value)}
+                  onChange={(e) => setEditedStock(parseInt(e.target.value))}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -347,24 +347,9 @@ const AllProductsInfo = () => {
                 </label>
                 <textarea
                   id="description"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedDescription}
                   onChange={(e) => setEditedDescription(e.target.value)}
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="image"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Image
-                </label>
-                <input
-                  type="file"
-                  id="image"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
-                  onChange={handleImageChange}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -378,9 +363,9 @@ const AllProductsInfo = () => {
                 <input
                   type="number"
                   id="length"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedLength}
-                  onChange={(e) => setEditedLength(e.target.value)}
+                  onChange={(e) => setEditedLength(parseFloat(e.target.value))}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -394,9 +379,9 @@ const AllProductsInfo = () => {
                 <input
                   type="number"
                   id="breadth"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedBreadth}
-                  onChange={(e) => setEditedBreadth(e.target.value)}
+                  onChange={(e) => setEditedBreadth(parseFloat(e.target.value))}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
@@ -410,28 +395,35 @@ const AllProductsInfo = () => {
                 <input
                   type="number"
                   id="height"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
                   value={editedHeight}
-                  onChange={(e) => setEditedHeight(e.target.value)}
+                  onChange={(e) => setEditedHeight(parseFloat(e.target.value))}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="image"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Image
+                </label>
+                <input
+                  type="file"
+                  id="image"
+                  onChange={handleImageChange}
+                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
 
               <div className="flex justify-end">
-                <button
-                  type="button"
-                  className="mr-2 px-4 py-2 bg-gray-200 text-gray-700 rounded"
-                  onClick={() => setIsEditModalOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  className="px-4 py-2 bg-blue-600 text-white rounded"
+                <Button
                   onClick={saveChanges}
                   disabled={isLoading}
+                  className="bg-blue-500 text-white p-2 rounded"
                 >
-                  {isLoading ? "Saving..." : "Save"}
-                </button>
+                  Save Changes
+                </Button>
               </div>
             </form>
           </div>
