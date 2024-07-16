@@ -43,6 +43,7 @@ const predefinedSubcategories = {
   ],
 };
 
+// Adjusted CategoryPage component with margin added to product name and price
 const CategoryPage = () => {
   const [productsList, setProductsList] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -50,7 +51,7 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [subcategoryName, setSubcategoryName] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
 
   const fetchProducts = async () => {
     try {
@@ -111,7 +112,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6">
+    <div className="min-h-screen flex flex-col items-center p-6 overflow-hidden">
       {loading ? (
         <Loader className="animate-spin text-gray-600 h-12 w-12" />
       ) : (
@@ -127,7 +128,7 @@ const CategoryPage = () => {
                 step="10"
                 value={priceRange[0]}
                 onChange={(e) => handlePriceChange(e, 0)}
-                className="flex-grow appearance-none bg-black h-1 rounded-md"
+                className="flex-grow appearance-none bg-black h-0.5 rounded-md"
               />
               <span className="ml-2">$100000</span>
             </div>
@@ -140,7 +141,7 @@ const CategoryPage = () => {
                 step="10"
                 value={priceRange[1]}
                 onChange={(e) => handlePriceChange(e, 1)}
-                className="flex-grow appearance-none bg-black h-1 rounded-md"
+                className="flex-grow appearance-none bg-black h-0.5 rounded-md"
               />
               <span className="ml-2">$100000</span>
             </div>
@@ -170,28 +171,27 @@ const CategoryPage = () => {
                 {productsList.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center"
+                    className="bg-white p-4 rounded-lg shadow-md flex flex-col"
                   >
-                    <div className="w-64 h-64 flex items-center justify-center mb-4 rounded-md bg-gray-100 relative overflow-hidden">
-                      <Link
-                        href={`/category/${product.category}/${product.subcategory}/${product.product_id}/${product.id}/info`}
-                        passHref
-                      >
-                        <Image
-                          src={product.imageUrl[0] || "/Sofa.jpg"}
-                          alt={product.name}
-                          layout="fill"
-                          objectFit="cover"
-                          className="rounded-md"
-                        />
-                      </Link>
+                    <Link
+                      href={`/category/${product.category}/${product.subcategory}/${product.product_id}/${product.id}/info`}
+                      passHref
+                      className="w-full h-64 mb-4 relative overflow-hidden rounded-md"
+                    >
+                      <Image
+                        src={product.imageUrl[0] || "/Sofa.jpg"}
+                        alt={product.name}
+                        layout="fill"
+                        objectFit="contain"
+                        className="rounded-md"
+                      />
+                    </Link>
+                    <div className="text-left">
+                      <h2 className="text-lg font-semibold mb-2 ml-2"> {/* Adjusted margin here */}
+                        {product.name}
+                      </h2>
+                      <p className="text-gray-700 ml-2">${product.price}</p> {/* Adjusted margin here */}
                     </div>
-                    <h2 className="text-lg font-semibold mb-2 text-center">
-                      {product.name}
-                    </h2>
-                    <p className="text-gray-700 text-center">
-                      ${product.price}
-                    </p>
                   </div>
                 ))}
               </div>
