@@ -2,9 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Menu, X, Heart, ShoppingCart, Search } from 'lucide-react';
-import { ArrowDown } from 'lucide-react';
-import { ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,9 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -22,6 +18,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '@/utils/UserUtils';
+import { Architects_Daughter } from 'next/font/google';
+
+const architectsDaughter = Architects_Daughter({
+  weight: '400',
+  style: 'normal',
+  subsets: ['latin'],
+});
 
 const predefinedCategories = [
   { id: 1, name: 'Bedroom', subcategories: [{ id: 1, name: 'Wardrobe' }, { id: 2, name: 'BedsideTable' }, { id: 3, name: 'Bed' }, { id: 4, name: 'Dresser' }, { id: 5, name: 'Mattress' }] },
@@ -45,14 +48,18 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-9 flex justify-between items-center">
         <div className="flex items-center">
           <Link href={'/'}>
-            <Image src="/next.svg" alt="Logo" width={100} height={100} />
+            <Image src="/logo.jpeg" alt="Logo" width={80} height={80} className='rounded-full' />
           </Link>
+          <div className="ml-6">
+            <div className={`text-3xl font-bold ${architectsDaughter.className}`}>URBAN FURNITURE</div>
+            <div className="text-sm font-bold ml-2 w-84 font-serif">EXCLUSIVE INDIAN FURNITURE</div>
+          </div>
         </div>
         <div className="hidden md:flex space-x-6">
-          <Link href="/" className="text-gray-600 hover:text-gray-800">Home</Link>
+          <Link href="/" className="font-medium text-black font-bold">Home</Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <a href="#" className="flex items-center text-gray-600 hover:text-gray-800">
+              <a href="#" className="flex items-center font-medium text-black font-bold">
                 Product Categories <ChevronDown className="ml-1" />
               </a>
             </DropdownMenuTrigger>
@@ -79,15 +86,12 @@ const Navbar = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <a href="#" className="text-gray-600 hover:text-gray-800">Projects</a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">Media</a>
-          <a href="#" className="text-gray-600 hover:text-gray-800">About Us</a>
-          <Link href="/contact" className="text-gray-600 hover:text-gray-800">Contact Us</Link>
+          <a href="#" className="font-medium text-black font-bold">Projects</a>
+          <a href="#" className="font-medium text-black font-bold">Media</a>
+          <a href="#" className="font-medium text-black font-bold">About Us</a>
+          <Link href="/contact" className="font-medium text-black font-bold">Contact Us</Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
-          <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
-          <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
-          <Search className="text-gray-600 hover:text-gray-800 cursor-pointer" />
           <UserButton />
           {userRole === 'org:admin' && (
             <Link href={'/admin'}>
@@ -104,15 +108,15 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Home</Link>
+            <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Home</Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">
+                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">
                   Product Categories <ChevronDown className="ml-1" />
                 </a>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-full">
-                <DropdownMenuGroup className='mr-48 mt-1'>
+                <DropdownMenuGroup className="mr-48 mt-1">
                   {predefinedCategories.map(category => (
                     <DropdownMenuSub key={category.id}>
                       <DropdownMenuSubTrigger>
@@ -134,14 +138,11 @@ const Navbar = () => {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Projects</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Media</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">About Us</Link>
-            <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-800">Contact Us</Link>
-            <div className="flex justify-around py-3">
-              <Heart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
-              <ShoppingCart className="text-gray-600 hover:text-gray-800 cursor-pointer" />
-              <Search className="text-gray-600 hover:text-gray-800 cursor-pointer" />
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Projects</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Media</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">About Us</Link>
+            <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Contact Us</Link>
+            <div className="flex justify-between items-center py-3">
               <UserButton />
               {userRole === 'org:admin' && (
                 <Link href={'/admin'}>
