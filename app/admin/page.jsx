@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -76,9 +76,10 @@ const Page = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productStock, setProductStock] = useState("");
-  const [productLength, setProductLength] = useState(""); 
-  const [productBreadth, setProductBreadth] = useState(""); 
-  const [productHeight, setProductHeight] = useState(""); 
+  const [productLength, setProductLength] = useState("");
+  const [productBreadth, setProductBreadth] = useState("");
+  const [productHeight, setProductHeight] = useState("");
+  const [productDiscount, setProductDiscount] = useState(""); // New state for discount
   const [loading, setLoading] = useState(false);
   const [imagesUploaded, setImagesUploaded] = useState(false);
 
@@ -119,6 +120,10 @@ const Page = () => {
 
   const handleHeightChange = (e) => {
     setProductHeight(e.target.value);
+  };
+
+  const handleDiscountChange = (e) => {
+    setProductDiscount(e.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -167,6 +172,7 @@ const Page = () => {
         length: parseInt(productLength, 10),
         breadth: parseInt(productBreadth, 10),
         height: parseInt(productHeight, 10),
+        discount: parseFloat(productDiscount), // Include discount in product data
       };
 
       const result = await db.insert(products).values(product);
@@ -267,7 +273,6 @@ const Page = () => {
                     onChange={handleStockChange}
                     className="w-full"
                   />
-                  {/* New input fields for length, breadth, and height */}
                   <Input
                     type="number"
                     placeholder="Length (cm)"
@@ -289,7 +294,16 @@ const Page = () => {
                     onChange={handleHeightChange}
                     className="w-full"
                   />
-                  {/* End of new input fields */}
+                  {/* New input field for discount */}
+                  <Input
+                    type="number"
+                    step="0.01"
+                    placeholder="Discount (%)"
+                    value={productDiscount}
+                    onChange={handleDiscountChange}
+                    className="w-full"
+                  />
+                  {/* End of new input field */}
                   <div className="flex flex-col gap-4">
                     <p className="text-xl font-bold">Upload Images (up to 3)</p>
                     <div className="flex gap-2 flex-wrap">

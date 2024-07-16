@@ -1,4 +1,6 @@
-"use client";
+"use client"
+
+// Updated CategoryPage component with discount display on product cards
 import { db } from "@/configs";
 import { products } from "@/configs/schema";
 import { eq, and, gte, lte } from "drizzle-orm";
@@ -43,7 +45,6 @@ const predefinedSubcategories = {
   ],
 };
 
-// Adjusted CategoryPage component with margin added to product name and price
 const CategoryPage = () => {
   const [productsList, setProductsList] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -51,7 +52,7 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [subcategoryName, setSubcategoryName] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 100000]);
+  const [priceRange, setPriceRange] = useState([0, 1000000]);
 
   const fetchProducts = async () => {
     try {
@@ -120,7 +121,7 @@ const CategoryPage = () => {
           <div className="md:w-1/4 p-4">
             <h2 className="text-lg font-semibold mb-4">Filter by Price</h2>
             <div className="flex items-center mb-4">
-              <span className="mr-2">$0</span>
+              <span className="mr-2">₹0</span>
               <input
                 type="range"
                 min="0"
@@ -130,10 +131,10 @@ const CategoryPage = () => {
                 onChange={(e) => handlePriceChange(e, 0)}
                 className="flex-grow appearance-none bg-black h-0.5 rounded-md"
               />
-              <span className="ml-2">$100000</span>
+              <span className="ml-2">₹1000000</span>
             </div>
             <div className="flex items-center mb-4">
-              <span className="mr-2">$0</span>
+              <span className="mr-2">₹0</span>
               <input
                 type="range"
                 min="0"
@@ -143,10 +144,10 @@ const CategoryPage = () => {
                 onChange={(e) => handlePriceChange(e, 1)}
                 className="flex-grow appearance-none bg-black h-0.5 rounded-md"
               />
-              <span className="ml-2">$100000</span>
+              <span className="ml-2">₹100000</span>
             </div>
             <p className="text-gray-700 mb-4">
-              Selected Range: ${priceRange[0]} - ${priceRange[1]}
+              Selected Range: ₹{priceRange[0]} - ₹{priceRange[1]}
             </p>
             <button
               onClick={handleFilterClick}
@@ -171,7 +172,8 @@ const CategoryPage = () => {
                 {productsList.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white p-4 rounded-lg shadow-md flex flex-col"
+                    className="bg-white p-4 rounded-lg flex flex-col relative"
+                    style={{ cursor: "default" }} // Ensure no hover effect
                   >
                     <Link
                       href={`/category/${product.category}/${product.subcategory}/${product.product_id}/${product.id}/info`}
@@ -186,11 +188,21 @@ const CategoryPage = () => {
                         className="rounded-md"
                       />
                     </Link>
-                    <div className="text-left">
-                      <h2 className="text-lg font-semibold mb-2 ml-2"> {/* Adjusted margin here */}
+                    <div className="absolute top-2 left-2 bg-green-300 text-black px-2 py-1 rounded">
+                      <span className="font-bold">-{product.discount}%</span>
+                    </div>
+                    <div className="text-left mt-[-3.25rem]">
+                      <h2 className="text-lg font-light mb-1 ml-2">
                         {product.name}
                       </h2>
-                      <p className="text-gray-700 ml-2">${product.price}</p> {/* Adjusted margin here */}
+                      <div className="flex items-center">
+                        <p className="text-black ml-2 font-bold text-xl">
+                          ₹{Math.round(product.price - (product.price * product.discount) / 100)}
+                        </p>
+                        <p className="text-gray-500 line-through ml-2">
+                          ₹{product.price}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}

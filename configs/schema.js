@@ -1,4 +1,4 @@
-const { pgTable, varchar, integer } = require("drizzle-orm/pg-core");
+const { pgTable, varchar, integer, numeric } = require("drizzle-orm/pg-core");
 
 export const products = pgTable('products', {
   id: varchar('id').primaryKey(),
@@ -12,5 +12,6 @@ export const products = pgTable('products', {
   imageUrl: varchar('imageUrl', 255).array(),
   length: integer('length').notNull(),
   breadth: integer('breadth').notNull(), 
-  height: integer('height').notNull(), 
+  height: integer('height').notNull(),
+  discount: numeric('discount', 5, 2).notNull() 
 });
