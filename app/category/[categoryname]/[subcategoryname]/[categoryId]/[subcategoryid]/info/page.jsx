@@ -93,7 +93,7 @@ const ProductInfo = () => {
           </div>
         </div>
         <div className="order-1 sm:order-2 flex flex-col items-center sm:items-start sm:ml-16">
-          <h2 className="text-5xl font-bold mb-2">{product.name}</h2>
+          <h2 className="text-5xl font-bold mb-2 font-mono">{product.name}</h2>
           {product.stock > 0 ? (
             <span className="bg-green-200 text-green-800 text-sm font-semibold px-4 py-2 mb-2 mt-4">
               *In Stock
@@ -110,7 +110,6 @@ const ProductInfo = () => {
           <p className="text-sm mt-2">Category: <span className="font-bold">{product.category}</span></p>
           <p className="text-sm mt-2">Subcategory: <span className="font-bold">{product.subcategory}</span></p>
           <hr className="w-full sm:w-240 border-t border-gray-400 opacity-50 mt-4"/>
-          {/* Displaying dimensions */}
           <p className="text-sm mt-2">Dimensions:</p>
           <div className="flex flex-wrap">
             <p className="text-sm mt-2 mr-2">Length:<span className="font-bold">{product.length} cm</span></p>

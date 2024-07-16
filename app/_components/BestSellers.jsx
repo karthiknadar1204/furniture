@@ -45,7 +45,7 @@ const BestSellers = () => {
                 src={product.imageUrl[0]}
                 alt={product.name}
                 layout="fill"
-                objectFit="cover"
+                objectFit="contain"
                 className="rounded-lg"
               />
             </div>
