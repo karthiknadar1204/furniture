@@ -104,9 +104,6 @@ const ProductInfo = () => {
             </span>
           )}
           <hr className="w-full sm:w-240 border-t border-gray-400 opacity-50 mt-4"/>
-          <p className="text-2xl text-red-600 font-bold mt-8">${product.price}</p>
-          <hr className="w-full sm:w-240 border-t border-gray-400 opacity-50 mt-4"/>
-          <p className="text-sm mt-4">SKU: <span className="font-bold">{product.id}</span></p>
           <p className="text-sm mt-2">Category: <span className="font-bold">{product.category}</span></p>
           <p className="text-sm mt-2">Subcategory: <span className="font-bold">{product.subcategory}</span></p>
           <hr className="w-full sm:w-240 border-t border-gray-400 opacity-50 mt-4"/>
