@@ -16,10 +16,6 @@ export default function Home() {
       <ImageGallery/>
       </div>
 
-      <div className="mt-24" >
-        <BestSellers/>
-      </div>
-
       <div className="mt-24 bottom-0" >
         <ExtraImages/>
       </div>

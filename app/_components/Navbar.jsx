@@ -51,12 +51,12 @@ const Navbar = () => {
             <Image src="/logo.jpeg" alt="Logo" width={80} height={80} className='rounded-full' />
           </Link>
           <div className="ml-6">
-            <div className={`text-3xl font-bold ${architectsDaughter.className}`}>URBAN FURNITURE</div>
-            <div className="text-sm font-bold ml-2 w-84 font-serif">EXCLUSIVE INDIAN FURNITURE</div>
+            <div className={`text-3xl font-bold ${architectsDaughter.className}`}>THE URBAN FURNITURE</div>
           </div>
         </div>
         <div className="hidden md:flex space-x-6">
           <Link href="/" className="font-medium text-black font-bold">Home</Link>
+          <a href="#" className="font-medium text-black font-bold">About Us</a>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <a href="#" className="flex items-center font-medium text-black font-bold">
@@ -86,9 +86,6 @@ const Navbar = () => {
               </DropdownMenuGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <a href="#" className="font-medium text-black font-bold">Projects</a>
-          <a href="#" className="font-medium text-black font-bold">Media</a>
-          <a href="#" className="font-medium text-black font-bold">About Us</a>
           <Link href="/contact" className="font-medium text-black font-bold">Contact Us</Link>
         </div>
         <div className="hidden md:flex items-center space-x-4">
@@ -109,6 +106,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Home</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">About Us</Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">
@@ -137,10 +135,7 @@ const Navbar = () => {
                   ))}
                 </DropdownMenuGroup>
               </DropdownMenuContent>
-            </DropdownMenu>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Projects</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Media</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">About Us</Link>
+            </DropdownMenu>            
             <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Contact Us</Link>
             <div className="flex justify-between items-center py-3">
               <UserButton />
