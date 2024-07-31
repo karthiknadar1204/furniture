@@ -1,48 +1,40 @@
-import React from "react";
-import Image from "next/image";
-import { ArrowRight } from 'lucide-react';
+import React from 'react';
 
 const ExtraImages = () => {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="relative mb-4">
-        <Image src={"/sofa.jpg"} width={1050} height={1050} alt="First Image" className="w-full h-auto" />
-        <div className="absolute top-0 left-0 p-2 sm:p-4 text-white font-bold m-2 sm:m-4 max-w-xs sm:max-w-sm">
-          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
-            The Ideal Choice <br /> for Home & <br /> Office
-          </div>
-          <div className="flex items-center mt-2 sm:mt-4 text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl">
-            <span className="text-red-500">Shop Now</span>
-            <ArrowRight className="text-red-500 ml-2" />
-          </div>
-        </div>
+    <div className="flex flex-col md:flex-row justify-around p-4">
+      <div className="w-full md:w-1/3 p-2">
+        <iframe
+          width="100%"
+          height="200"
+          src="https://www.youtube.com/embed/nhKjgARTk4k"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
-
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="relative flex-1 transform transition-transform hover:scale-105 cursor-pointer">
-          <Image src={"/sofa.jpg"} width={480} height={450} alt="Second Image" className="w-full h-auto" />
-          <div className="absolute top-0 left-0 p-2 sm:p-4 text-white font-bold m-2 sm:m-4">
-            <div className="text-base sm:text-lg md:text-xl lg:text-2xl">
-              Custom Made <br /> Furniture
-            </div>
-            <div className="flex items-center mt-2 sm:mt-4 text-xs sm:text-sm lg:text-base">
-              <span className="text-red-500">Shop Now</span>
-              <ArrowRight className="text-red-500 ml-2" />
-            </div>
-          </div>
-        </div>
-        <div className="relative flex-1 transform transition-transform hover:scale-105 cursor-pointer">
-          <Image src={"/sofa.jpg"} width={480} height={450} alt="Third Image" className="w-full h-auto" />
-          <div className="absolute top-0 left-0 p-2 sm:p-4 text-white font-bold m-2 sm:m-4 max-w-xs sm:max-w-sm">
-            <div className="text-base sm:text-lg md:text-xl lg:text-2xl">
-              Customize <br /> Modular Furniture
-            </div>
-            <div className="flex items-center mt-2 sm:mt-4 text-xs sm:text-sm lg:text-base">
-              <span className="text-red-500">Shop Now</span>
-              <ArrowRight className="text-red-500 ml-2" />
-            </div>
-          </div>
-        </div>
+      <div className="w-full md:w-1/3 p-2">
+        <iframe
+          width="100%"
+          height="200"
+          src="https://www.youtube.com/embed/nhKjgARTk4k"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </div>
+      <div className="w-full md:w-1/3 p-2">
+        <iframe
+          width="100%"
+          height="200"
+          src="https://www.youtube.com/embed/nhKjgARTk4k"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </div>
     </div>
   );

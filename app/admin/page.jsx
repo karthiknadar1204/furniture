@@ -165,14 +165,12 @@ const Page = () => {
         subcategory: selectedSubcategory.name,
         name: productName,
         description: productDescription,
-        price: parseInt(productPrice, 10),
         stock: parseInt(productStock, 10),
         product_id: selectedSubcategory.id,
         imageUrl: imageUrls,
         length: parseInt(productLength, 10),
         breadth: parseInt(productBreadth, 10),
         height: parseInt(productHeight, 10),
-        discount: parseFloat(productDiscount), // Include discount in product data
       };
 
       const result = await db.insert(products).values(product);
@@ -261,13 +259,6 @@ const Page = () => {
                   />
                   <Input
                     type="number"
-                    placeholder="Price"
-                    value={productPrice}
-                    onChange={handlePriceChange}
-                    className="w-full"
-                  />
-                  <Input
-                    type="number"
                     placeholder="Stock"
                     value={productStock}
                     onChange={handleStockChange}
@@ -294,16 +285,6 @@ const Page = () => {
                     onChange={handleHeightChange}
                     className="w-full"
                   />
-                  {/* New input field for discount */}
-                  <Input
-                    type="number"
-                    step="0.01"
-                    placeholder="Discount (%)"
-                    value={productDiscount}
-                    onChange={handleDiscountChange}
-                    className="w-full"
-                  />
-                  {/* End of new input field */}
                   <div className="flex flex-col gap-4">
                     <p className="text-xl font-bold">Upload Images (up to 3)</p>
                     <div className="flex gap-2 flex-wrap">

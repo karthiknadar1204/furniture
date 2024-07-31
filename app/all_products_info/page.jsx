@@ -26,7 +26,7 @@ const AllProductsInfo = () => {
   const [editedProduct, setEditedProduct] = useState({
     id: null,
     name: "",
-    price: 0,
+    // price: 0,
     stock: 0,
     description: "",
     imageUrl: "",
@@ -35,7 +35,7 @@ const AllProductsInfo = () => {
     height: 0,
   });
   const [editedName, setEditedName] = useState("");
-  const [editedPrice, setEditedPrice] = useState(0);
+  // const [editedPrice, setEditedPrice] = useState(0);
   const [editedStock, setEditedStock] = useState(0);
   const [editedDescription, setEditedDescription] = useState("");
   const [editedImageFile, setEditedImageFile] = useState(null);
@@ -43,7 +43,7 @@ const AllProductsInfo = () => {
   const [editedBreadth, setEditedBreadth] = useState(0);
   const [editedHeight, setEditedHeight] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [editedDiscount, setEditedDiscount] = useState(0);
+  // const [editedDiscount, setEditedDiscount] = useState(0);
   const router = useRouter();
 
   const handleCategoryClick = async (category) => {
@@ -84,13 +84,13 @@ const AllProductsInfo = () => {
   const openEditModal = (product) => {
     setEditedProduct(product);
     setEditedName(product.name);
-    setEditedPrice(product.price);
+    // setEditedPrice(product.price);
     setEditedStock(product.stock);
     setEditedDescription(product.description);
     setEditedLength(product.length || 0);
     setEditedBreadth(product.breadth || 0);
     setEditedHeight(product.height || 0);
-    setEditedDiscount(product.discount || 0); 
+    // setEditedDiscount(product.discount || 0); 
     setIsEditModalOpen(true);
   };
 
@@ -126,14 +126,14 @@ const AllProductsInfo = () => {
         .update(products)
         .set({
           name: editedName,
-          price: editedPrice,
+          // price: editedPrice,
           stock: editedStock,
           description: editedDescription,
           imageUrl: newImageUrl,
           length: editedLength,
           breadth: editedBreadth,
           height: editedHeight,
-          discount: editedDiscount,
+          // discount: editedDiscount,
         })
         .where(eq(products.id, editedProduct.id))
         .execute();
@@ -143,14 +143,14 @@ const AllProductsInfo = () => {
           ? {
               ...product,
               name: editedName,
-              price: editedPrice,
+              // price: editedPrice,
               stock: editedStock,
               description: editedDescription,
               imageUrl: newImageUrl,
               length: editedLength,
               breadth: editedBreadth,
               height: editedHeight,
-              discount: editedDiscount,
+              // discount: editedDiscount,
             }
           : product
       );
@@ -312,22 +312,6 @@ const AllProductsInfo = () => {
 
               <div className="mb-4">
                 <label
-                  htmlFor="price"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Price
-                </label>
-                <input
-                  type="number"
-                  id="price"
-                  value={editedPrice}
-                  onChange={(e) => setEditedPrice(parseFloat(e.target.value))}
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
                   htmlFor="stock"
                   className="block text-sm font-medium text-gray-700"
                 >
@@ -353,23 +337,6 @@ const AllProductsInfo = () => {
                   id="description"
                   value={editedDescription}
                   onChange={(e) => setEditedDescription(e.target.value)}
-                  className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="discount"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Discount
-                </label>
-                <input
-                  type="number"
-                  id="discount"
-                  value={editedDiscount}
-                  onChange={(e) =>
-                    setEditedDiscount(parseFloat(e.target.value))
-                  }
                   className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>

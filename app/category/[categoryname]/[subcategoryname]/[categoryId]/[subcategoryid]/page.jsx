@@ -1,6 +1,5 @@
 "use client"
 
-// Updated CategoryPage component with discount display on product cards
 import { db } from "@/configs";
 import { products } from "@/configs/schema";
 import { eq, and, gte, lte } from "drizzle-orm";
@@ -79,13 +78,7 @@ const CategoryPage = () => {
         .select()
         .from(products)
         .where(
-          and(
-            eq(products.product_id, subcategoryId),
-            gte(products.price, priceRange[0]),
-            lte(products.price, priceRange[1])
-          )
-        )
-        .execute();
+            eq(products.product_id, subcategoryId), ).execute();
 
       setProductsList(result);
     } catch (error) {
@@ -99,63 +92,12 @@ const CategoryPage = () => {
     fetchProducts();
   }, [pathname]);
 
-  const handlePriceChange = (event, index) => {
-    const value = Number(event.target.value);
-    setPriceRange((prevRange) => {
-      const newRange = [...prevRange];
-      newRange[index] = value;
-      return newRange;
-    });
-  };
-
-  const handleFilterClick = () => {
-    fetchProducts();
-  };
-
   return (
     <div className="min-h-screen flex flex-col items-center p-6 overflow-hidden">
       {loading ? (
         <Loader className="animate-spin text-gray-600 h-12 w-12" />
       ) : (
         <div className="flex flex-col md:flex-row w-full">
-          <div className="md:w-1/4 p-4">
-            <h2 className="text-lg font-semibold mb-4">Filter by Price</h2>
-            <div className="flex items-center mb-4">
-              <span className="mr-2">₹0</span>
-              <input
-                type="range"
-                min="0"
-                max="100000"
-                step="10"
-                value={priceRange[0]}
-                onChange={(e) => handlePriceChange(e, 0)}
-                className="flex-grow appearance-none bg-black h-0.5 rounded-md"
-              />
-              <span className="ml-2">₹1000000</span>
-            </div>
-            <div className="flex items-center mb-4">
-              <span className="mr-2">₹0</span>
-              <input
-                type="range"
-                min="0"
-                max="100000"
-                step="10"
-                value={priceRange[1]}
-                onChange={(e) => handlePriceChange(e, 1)}
-                className="flex-grow appearance-none bg-black h-0.5 rounded-md"
-              />
-              <span className="ml-2">₹100000</span>
-            </div>
-            <p className="text-gray-700 mb-4">
-              Selected Range: ₹{priceRange[0]} - ₹{priceRange[1]}
-            </p>
-            <button
-              onClick={handleFilterClick}
-              className="bg-black text-white px-4 py-2 rounded"
-            >
-              Apply Filter
-            </button>
-          </div>
           <div className="md:w-3/4 flex flex-col">
             <div className="w-full text-left mb-4 md:ml-8">
               <h2 className="text-gray-500 text-sm">
@@ -188,21 +130,10 @@ const CategoryPage = () => {
                         className="rounded-md"
                       />
                     </Link>
-                    <div className="absolute top-2 left-2 bg-green-300 text-black px-2 py-1 rounded">
-                      <span className="font-bold">-{product.discount}%</span>
-                    </div>
                     <div className="text-left mt-[-3.25rem]">
                       <h2 className="text-lg font-light mb-1 ml-2">
                         {product.name}
                       </h2>
-                      <div className="flex items-center">
-                        <p className="text-black ml-2 font-bold text-xl">
-                          ₹{Math.round(product.price - (product.price * product.discount) / 100)}
-                        </p>
-                        <p className="text-gray-500 line-through ml-2">
-                          ₹{product.price}
-                        </p>
-                      </div>
                     </div>
                   </div>
                 ))}
