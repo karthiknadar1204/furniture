@@ -41,7 +41,7 @@ const Carousel = () => {
     <section className="relative h-screen w-screen -mt-24">
       <Slider {...settings}>
         {sliderData.map((slide, index) => (
-          <div key={index} className="relative h-screen w-screen">
+          <div key={index} className="relative h-screen w-screen overflow-x-hidden">
             <div
               className="h-full w-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${slide.image})` }}

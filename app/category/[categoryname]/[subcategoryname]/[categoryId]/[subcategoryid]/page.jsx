@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
 import { db } from "@/configs";
 import { products } from "@/configs/schema";
-import { eq, and, gte, lte } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -52,6 +52,8 @@ const CategoryPage = () => {
   const [categoryName, setCategoryName] = useState("");
   const [subcategoryName, setSubcategoryName] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000000]);
+  const sets = pathname.split("/");
+  const category = sets[4].toLowerCase();
 
   const fetchProducts = async () => {
     try {
@@ -77,8 +79,8 @@ const CategoryPage = () => {
       const result = await db
         .select()
         .from(products)
-        .where(
-            eq(products.product_id, subcategoryId), ).execute();
+        .where(eq(products.product_id, subcategoryId))
+        .execute();
 
       setProductsList(result);
     } catch (error) {
@@ -99,12 +101,6 @@ const CategoryPage = () => {
       ) : (
         <div className="flex flex-col md:flex-row w-full">
           <div className="md:w-3/4 flex flex-col">
-            <div className="w-full text-left mb-4 md:ml-8">
-              <h2 className="text-gray-500 text-sm">
-                {categoryName} / {subcategoryName}
-              </h2>
-              <h1 className="text-2xl font-bold mt-2">{categoryName}</h1>
-            </div>
             {productsList.length === 0 ? (
               <p className="text-xl font-semibold text-gray-600 mt-8">
                 No products added yet.
@@ -115,7 +111,7 @@ const CategoryPage = () => {
                   <div
                     key={product.id}
                     className="bg-white p-4 rounded-lg flex flex-col relative"
-                    style={{ cursor: "default" }} // Ensure no hover effect
+                    style={{ cursor: "default" }}
                   >
                     <Link
                       href={`/category/${product.category}/${product.subcategory}/${product.product_id}/${product.id}/info`}
@@ -129,16 +125,39 @@ const CategoryPage = () => {
                         objectFit="contain"
                         className="rounded-md"
                       />
-                    </Link>
-                    <div className="text-left mt-[-3.25rem]">
-                      <h2 className="text-lg font-light mb-1 ml-2">
+                      <h2 className="absolute inset-x-0 bottom-8 text-2xl font-bold text-center text-black py-1">
                         {product.name}
                       </h2>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
             )}
+          </div>
+          <div className="md:w-1/4 flex flex-col mt-8 md:mt-0 md:ml-8">
+            <h2 className="text-xl font-semibold mb-4">Subcategories</h2>
+            <div className="overflow-x-auto border border-gray-300 rounded-lg">
+              <table className="w-full table-auto border-collapse">
+                <thead>
+                  <tr>
+                    <th className="border-b px-4 py-2 text-left">Subcategory</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {subcategories.map((subcategory) => (
+                    <tr key={subcategory.id}>
+                      <td className="border-b px-4 py-2">
+                        <Link
+                          href={`/category/${categoryName.toLowerCase()}/${subcategory.name.toLowerCase().replace(/\s+/g, "")}/${category}/${subcategory.id}`}
+                        >
+                          {subcategory.name}
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
