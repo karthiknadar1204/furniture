@@ -7,16 +7,16 @@ import SocialMediaPanel from "./_components/SocialMediaPanel";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen w-full flex-col items-center justify-between p-24 overflow-x-hidden">
       <Slider/>
-      <div className="mt-9" >
+      <div className="mt-9 w-full">
         <ProductRange/>
       </div>
-      <div className="mt-24" >
-      <ImageGallery/>
+      <div className="mt-24 w-full">
+        <ImageGallery/>
       </div>
 
-      <div className="mt-24 bottom-0" >
+      <div className="mt-24 w-full">
         <ExtraImages/>
       </div>
     </main>
