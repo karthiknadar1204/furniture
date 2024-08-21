@@ -46,7 +46,7 @@ const Footer = () => {
 
       <div className="mt-8 flex items-center justify-between px-4 ml-10">
         <div className="flex items-center">
-          <Image src={'/next.svg'} alt="Logo" width={100} height={100} className="h-8 mr-4" />
+          <Image src={'/logo.jpeg'} alt="Logo" width={100} height={100}/>
           <p className="text-sm">© 2024 Your Company. All rights reserved.</p>
         </div>
         <div className="hidden md:flex space-x-2">
