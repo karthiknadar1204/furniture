@@ -110,7 +110,7 @@ const CategoryPage = () => {
                 {productsList.map((product) => (
                   <div
                     key={product.id}
-                    className="bg-white p-4 rounded-lg flex flex-col relative"
+                    className="bg-white p-4 rounded-lg flex flex-col items-center relative"
                     style={{ cursor: "default" }}
                   >
                     <Link
@@ -118,17 +118,19 @@ const CategoryPage = () => {
                       passHref
                       className="w-full h-64 mb-4 relative overflow-hidden rounded-md"
                     >
-                      <Image
-                        src={product.imageUrl[0] || "/Sofa.jpg"}
-                        alt={product.name}
-                        layout="fill"
-                        objectFit="contain"
-                        className="rounded-md"
-                      />
-                      <h2 className="absolute inset-x-0 bottom-8 text-2xl font-bold text-center text-black py-1">
-                        {product.name}
-                      </h2>
+                      <div className="relative w-48 h-48 mx-auto"> {/* Center the image */}
+                        <Image
+                          src={product.imageUrl[0] || "/Sofa.jpg"}
+                          alt={product.name}
+                          fill
+                          objectFit="cover"
+                          className="rounded-md"
+                        />
+                      </div>
                     </Link>
+                    <h2 className="text-2xl font-bold text-center text-black mt-4"> {/* Adjust margin-top */}
+                      {product.name}
+                    </h2>
                   </div>
                 ))}
               </div>
@@ -138,17 +140,17 @@ const CategoryPage = () => {
             <h2 className="text-xl font-semibold mb-4">Subcategories</h2>
             <div className="overflow-x-auto border border-gray-300 rounded-lg">
               <table className="w-full table-auto border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border-b px-4 py-2 text-left">Subcategory</th>
-                  </tr>
-                </thead>
+                <thead></thead>
                 <tbody>
                   {subcategories.map((subcategory) => (
                     <tr key={subcategory.id}>
                       <td className="border-b px-4 py-2">
                         <Link
-                          href={`/category/${categoryName.toLowerCase()}/${subcategory.name.toLowerCase().replace(/\s+/g, "")}/${category}/${subcategory.id}`}
+                          href={`/category/${categoryName.toLowerCase()}/${subcategory.name
+                            .toLowerCase()
+                            .replace(/\s+/g, "")}/${category}/${
+                            subcategory.id
+                          }`}
                         >
                           {subcategory.name}
                         </Link>

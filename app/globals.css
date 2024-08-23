@@ -80,3 +80,12 @@ html, body {
   height: 100%;
   margin: 0;
 }
+
+@media (max-width: 640px) {
+  .custom-position-small-screens {
+    margin-top: 15rem; 
+    text-align: left;
+    padding-left: 1rem;
+  }
+}
+

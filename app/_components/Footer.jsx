@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import { Instagram, Facebook } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -32,31 +33,21 @@ const Footer = () => {
             <li><a href="#" className="block text-sm py-1">Contact us</a></li>
           </ul>
         </div>
-        <div className="col-span-1 sm:col-span-1 md:col-span-1 relative">
-          <h3 className="text-sm font-bold mb-4">Need Help</h3>
-          <ul>
-            <li><a href="#" className="block text-sm py-1">Link 11</a></li>
-            <li><a href="#" className="block text-sm py-1">Link 12</a></li>
-            <li><a href="#" className="block text-sm py-1">Link 13</a></li>
-            <li><a href="#" className="block text-sm py-1">Link 14</a></li>
-            <li><a href="#" className="block text-sm py-1">Link 15</a></li>
-          </ul>
-        </div>
       </div>
 
       <div className="mt-8 flex items-center justify-between px-4 ml-10">
         <div className="flex items-center">
-          <Image src={'/logo.jpeg'} alt="Logo" width={100} height={100}/>
+          <Image src={'/logo.jpeg'} alt="Logo" width={60} height={60}/>
           <p className="text-sm">© 2024 Your Company. All rights reserved.</p>
         </div>
-        <div className="hidden md:flex space-x-2">
-          <Link href="#" className="text-sm py-1 px-2 bg-opacity-50">Shop</Link>
+        <div className="hidden md:flex space-x-4">
+          <Link href="https://www.instagram.com/urbanfurniture23?utm_source=qr&igsh=MXZ5emJyYXE1d3Nneg%3D%3D" target="_blank" aria-label="Instagram" className="text-sm py-1 px-2 bg-opacity-50">
+            <Instagram className="w-6 h-6" />
+          </Link>
           <hr className="border-l border-gray-300 bg-opacity-50 h-4 my-auto" />
-          <Link href="#" className="text-sm py-1 px-2 bg-opacity-50">Blog</Link>
-          <hr className="border-l border-gray-300 bg-opacity-50 h-4 my-auto" />
-          <Link href="#" className="text-sm py-1 px-2 bg-opacity-50">Order Tracking</Link>
-          <hr className="border-l border-gray-300 bg-opacity-50 h-4 my-auto" />
-          <Link href="#" className="text-sm py-1 px-2 bg-opacity-50">Contact us</Link>
+          <Link href="https://www.facebook.com" aria-label="Facebook" className="text-sm py-1 px-2 bg-opacity-50">
+            <Facebook className="w-6 h-6" />
+          </Link>
         </div>
       </div>
     </footer>
