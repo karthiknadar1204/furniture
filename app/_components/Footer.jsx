@@ -35,12 +35,12 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-between px-4 ml-10">
+      <div className="mt-8 flex flex-col sm:flex-row items-center justify-between px-4 ml-10">
         <div className="flex items-center">
           <Image src={'/logo.jpeg'} alt="Logo" width={60} height={60}/>
-          <p className="text-sm">© 2024 Your Company. All rights reserved.</p>
+          <p className="text-sm ml-2">© 2024 Your Company. All rights reserved.</p>
         </div>
-        <div className="hidden md:flex space-x-4">
+        <div className="flex space-x-4 mt-4 sm:mt-0">
           <Link href="https://www.instagram.com/urbanfurniture23?utm_source=qr&igsh=MXZ5emJyYXE1d3Nneg%3D%3D" target="_blank" aria-label="Instagram" className="text-sm py-1 px-2 bg-opacity-50">
             <Instagram className="w-6 h-6" />
           </Link>
