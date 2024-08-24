@@ -55,7 +55,15 @@ const ProductItem = ({ image, icon: Icon, name, category, subcategory }) => {
   return (
     <Link href={href} className="flex flex-col items-center">
       {image ? (
-        <Image src={image} width={94} height={94} alt={name} />
+        <div className="w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+        <Image
+          src={image}
+          width={128}
+          height={128}
+          alt={name}
+          className="object-contain"
+        />
+      </div>
       ) : Icon ? (
         <Icon size={64} />
       ) : null}
@@ -83,14 +91,14 @@ const ProductRange = () => {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-20">
         <ProductItem image="/BedSideTable.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
         <ProductItem image="/WardRobe.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
-        <ProductItem icon={BedDouble} name="Dresser" {...findCategoryAndSubcategory("Dresser")} />
-        <ProductItem icon={Sofa} name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
+        <ProductItem image="/WardRobe.png" name="Dresser" {...findCategoryAndSubcategory("Dresser")} />
+        <ProductItem image="/WardRobe.png" name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
         <ProductItem image="/CenterTable.png" name="Center Table" {...findCategoryAndSubcategory("Center Table")} />
         <ProductItem image="/SofaCumBed.png" name="Sofa-cum bed" {...findCategoryAndSubcategory("Sofacumbed")} />
         <ProductItem image="/DiningTable.png" name="Dining Table" {...findCategoryAndSubcategory("Dining Table")} />
         <ProductItem image="/OfficeTable.png" name="Office Table" {...findCategoryAndSubcategory("Office Table")} />
-        <ProductItem icon={BedDouble} name="Office Chair" {...findCategoryAndSubcategory("Office Chair")} />
-        <ProductItem icon={BedDouble} name="Mattress" {...findCategoryAndSubcategory("Mattress")} />
+        <ProductItem image="/WardRobe.png" name="Office Chair" {...findCategoryAndSubcategory("Office Chair")} />
+        <ProductItem image="/WardRobe.png" name="Mattress" {...findCategoryAndSubcategory("Mattress")} />
       </div>
     </div>
   );
