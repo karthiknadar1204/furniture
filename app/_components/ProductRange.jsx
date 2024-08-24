@@ -1,58 +1,99 @@
+"use client"
+
 import React from 'react';
-import { BedDouble } from 'lucide-react';
-import { Sofa } from 'lucide-react';
+import { BedDouble, Sofa } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+
+const predefinedCategories = [
+  {
+    id: 1,
+    name: 'Bedroom',
+    subcategories: [
+      { id: 1, name: 'Wardrobe' },
+      { id: 2, name: 'BedsideTable' },
+      { id: 3, name: 'Bed' },
+      { id: 4, name: 'Dresser' },
+      { id: 5, name: 'Mattress' }
+    ]
+  },
+  {
+    id: 2,
+    name: 'LivingRoom',
+    subcategories: [
+      { id: 6, name: 'Sofa' },
+      { id: 7, name: 'Sofacumbed' },
+      { id: 8, name: 'Multi-utility Cabinet' },
+      { id: 9, name: 'Center Table' },
+      { id: 10, name: 'Bookshelf' }
+    ]
+  },
+  {
+    id: 3,
+    name: 'Dining',
+    subcategories: [
+      { id: 11, name: 'Kitchen Cabinet' },
+      { id: 12, name: 'Dining Table' }
+    ]
+  },
+  {
+    id: 4,
+    name: 'Office',
+    subcategories: [
+      { id: 13, name: 'Office Table' },
+      { id: 14, name: 'Office Chair' },
+      { id: 15, name: 'Study Table' },
+      { id: 16, name: 'Bookshelf' },
+      { id: 17, name: 'Filing Cabinet' }
+    ]
+  },
+];
+
+const ProductItem = ({ image, icon: Icon, name, category, subcategory }) => {
+  const href = `/category/${category.name}/${subcategory.name}/${category.id}/${subcategory.id}`;
+
+  return (
+    <Link href={href} className="flex flex-col items-center">
+      {image ? (
+        <Image src={image} width={94} height={94} alt={name} />
+      ) : Icon ? (
+        <Icon size={64} />
+      ) : null}
+      <h1 className="text-sm mt-2"><strong>{name}</strong></h1>
+    </Link>
+  );
+};
 
 const ProductRange = () => {
+  const findCategoryAndSubcategory = (name) => {
+    for (const category of predefinedCategories) {
+      const subcategory = category.subcategories.find(sub => sub.name.toLowerCase() === name.toLowerCase());
+      if (subcategory) {
+        return { category, subcategory };
+      }
+    }
+    return { category: null, subcategory: null };
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-semibold">Product Range</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-20">
-        <div className="flex flex-col items-center">
-        <Image src='/BedSideTable.png' width={94} height={94} />
-          <h1 className="text-sm mt-2"> <strong>Bed Side Table</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image src='/WardRobe.png' width={94} height={94} />
-          <h1 className="text-sm mt-2"><strong>Wardrobe</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <BedDouble size={64} />
-          <h1 className="text-sm mt-2"><strong>Dresser</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <Sofa size={64} />
-          <h1 className="text-sm mt-2"><strong>Sofa</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-        <Image src='/CenterTable.png' width={144} height={124} />
-          <h1 className="text-sm mt-2"><strong>Center Table</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-        <Image src='/SofaCumBed.png' width={94} height={94} />
-          <h1 className="text-sm mt-2"><strong>Sofa-cum bed</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-        <Image src='/DiningTable.png' width={94} height={94} />
-          <h1 className="text-sm mt-2"><strong>Dining Table</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-        <Image src='/OfficeTable.png' width={94} height={94} />
-          <h1 className="text-sm mt-2"><strong>OfficeTable</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <BedDouble size={64} />
-          <h1 className="text-sm mt-2"><strong>Office Chair</strong></h1>
-        </div>
-        <div className="flex flex-col items-center">
-          <BedDouble size={64} />
-          <h1 className="text-sm mt-2"><strong>Mattress</strong></h1>
-        </div>
+        <ProductItem image="/BedSideTable.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
+        <ProductItem image="/WardRobe.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
+        <ProductItem icon={BedDouble} name="Dresser" {...findCategoryAndSubcategory("Dresser")} />
+        <ProductItem icon={Sofa} name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
+        <ProductItem image="/CenterTable.png" name="Center Table" {...findCategoryAndSubcategory("Center Table")} />
+        <ProductItem image="/SofaCumBed.png" name="Sofa-cum bed" {...findCategoryAndSubcategory("Sofacumbed")} />
+        <ProductItem image="/DiningTable.png" name="Dining Table" {...findCategoryAndSubcategory("Dining Table")} />
+        <ProductItem image="/OfficeTable.png" name="Office Table" {...findCategoryAndSubcategory("Office Table")} />
+        <ProductItem icon={BedDouble} name="Office Chair" {...findCategoryAndSubcategory("Office Chair")} />
+        <ProductItem icon={BedDouble} name="Mattress" {...findCategoryAndSubcategory("Mattress")} />
       </div>
     </div>
   );
-}
+};
 
 export default ProductRange;

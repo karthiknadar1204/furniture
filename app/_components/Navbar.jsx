@@ -16,7 +16,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { SignedOut, UserButton, SignedIn, useSession } from '@clerk/nextjs';
+import { UserButton, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '@/utils/UserUtils';
 import { Architects_Daughter } from 'next/font/google';
 
@@ -43,6 +43,10 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <nav className="bg-white shadow-md w-full z-10 relative">
       <div className="container mx-auto px-6 py-9 flex justify-between items-center">
@@ -60,7 +64,7 @@ const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <a href="#" className="flex items-center font-medium text-black font-bold">
-                Product Categories <ChevronDown className="ml-1" />
+                Product Categories <ChevronDown className="ml-1 inline" />
               </a>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -105,12 +109,12 @@ const Navbar = () => {
       {isOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Home</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">About Us</Link>
+            <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>Home</Link>
+            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>About Us</Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">
-                  Product Categories <ChevronDown className="ml-1" />
+                <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold flex justify-between items-center">
+                  Product Categories <ChevronDown className="ml-1 inline" />
                 </a>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-full">
@@ -124,7 +128,7 @@ const Navbar = () => {
                         <DropdownMenuSubContent className="w-full">
                           {category.subcategories.map(subcategory => (
                             <DropdownMenuItem key={subcategory.id}>
-                              <Link href={`/category/${category.name.toLowerCase()}/${subcategory.name.toLowerCase()}/${category.id}/${subcategory.id}`}>
+                              <Link href={`/category/${category.name.toLowerCase()}/${subcategory.name.toLowerCase()}/${category.id}/${subcategory.id}`} onClick={closeMenu}>
                                 {subcategory.name}
                               </Link>
                             </DropdownMenuItem>
@@ -136,11 +140,11 @@ const Navbar = () => {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>            
-            <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold">Contact Us</Link>
+            <Link href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>Contact Us</Link>
             <div className="flex justify-between items-center py-3">
               <UserButton />
               {userRole === 'org:admin' && (
-                <Link href={'/admin'}>
+                <Link href={'/admin'} onClick={closeMenu}>
                   <Button>DashBoard</Button>
                 </Link>
               )}

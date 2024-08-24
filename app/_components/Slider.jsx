@@ -13,19 +13,19 @@ const sliderData = [
     image: "/1.jpg",
     title: "Let us find your Forever Home.",
     description:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus numquam ea!",
+      "Step into a world where comfort meets elegance. Discover curated collections that redefine your living space.",
   },
   {
     image: "/2.jpg",
     title: "Find your perfect spot.",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula justo at urna.",
+      "Every corner tells a story. Let our exquisite designs turn your house into a home, full of character and charm.",
   },
   {
     image: "/3.jpg",
     title: "Discover new places.",
     description:
-      "Fusce dapibus tellus vel metus venenatis, ut posuere nulla efficitur. Sed vel metus vel metus.",
+      "Explore spaces that inspire. From timeless classics to modern masterpieces, we have something for every taste.",
   },
 ];
 

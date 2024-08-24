@@ -89,3 +89,12 @@ html, body {
   }
 }
 
+
+
+@media (max-width: 640px) {
+  .custom-video-container {
+    width: 100%;
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+  }
+}
