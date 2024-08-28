@@ -98,3 +98,14 @@ html, body {
     /* padding-right: 10px; */
   }
 }
+@media (max-width: 422px) {
+  .w-custom-container {
+    width: calc(100% + 50px) !important;
+    margin-left: -25px;
+  }
+  
+  .w-custom {
+    width: calc(100% + 50px) !important;
+  }
+}
+
