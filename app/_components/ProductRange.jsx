@@ -89,19 +89,19 @@ const ProductRange = () => {
         <h2 className="text-2xl font-semibold">Product Range</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-20">
-        <ProductItem image="/BedSideTable.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
-        <ProductItem image="/WardRobe.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
+        <ProductItem image="/bedsidetable.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
+        <ProductItem image="/wardRobe.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
         <ProductItem image="/WardRobe.png" name="Dresser" {...findCategoryAndSubcategory("Dresser")} />
-        <ProductItem image="/WardRobe.png" name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
-        <ProductItem image="/CenterTable.png" name="Center Table" {...findCategoryAndSubcategory("Center Table")} />
-        <ProductItem image="/SofaCumBed.png" name="Sofa-cum bed" {...findCategoryAndSubcategory("Sofacumbed")} />
-        <ProductItem image="/DiningTable.png" name="Dining Table" {...findCategoryAndSubcategory("Dining Table")} />
-        <ProductItem image="/OfficeTable.png" name="Office Table" {...findCategoryAndSubcategory("Office Table")} />
-        <ProductItem image="/WardRobe.png" name="Office Chair" {...findCategoryAndSubcategory("Office Chair")} />
-        <ProductItem image="/WardRobe.png" name="Mattress" {...findCategoryAndSubcategory("Mattress")} />
+        <ProductItem image="/sofa.png" name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
+        <ProductItem image="/centretable.png" name="Center Table" {...findCategoryAndSubcategory("Center Table")} />
+        <ProductItem image="/sofa_cum_bed.png" name="Sofa-cum bed" {...findCategoryAndSubcategory("Sofacumbed")} />
+        <ProductItem image="/dinningtable.png" name="Dining Table" {...findCategoryAndSubcategory("Dining Table")} />
+        <ProductItem image="/office_table.png" name="Office Table" {...findCategoryAndSubcategory("Office Table")} />
+        <ProductItem image="/office_chair.png" name="Office Chair" {...findCategoryAndSubcategory("Office Chair")} />
+        <ProductItem image="/mattress.png" name="Mattress" {...findCategoryAndSubcategory("Mattress")} />
       </div>
     </div>
   );
 };
-
+ 
 export default ProductRange;
