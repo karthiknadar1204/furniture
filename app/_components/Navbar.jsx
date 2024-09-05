@@ -18,10 +18,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserButton, useSession } from '@clerk/nextjs';
 import { checkUserRole } from '@/utils/UserUtils';
-import { Architects_Daughter } from 'next/font/google';
+import { Playfair_Display } from 'next/font/google';
 
-const architectsDaughter = Architects_Daughter({
-  weight: '400',
+const playfairDisplay = Playfair_Display({
+  weight: '700',
   style: 'normal',
   subsets: ['latin'],
 });
@@ -55,12 +55,12 @@ const Navbar = () => {
             <Image src="/logo.jpeg" alt="Logo" width={80} height={80} className='rounded-full' />
           </Link>
           <div className="ml-6">
-            <div className={`text-3xl font-bold ${architectsDaughter.className}`}>THE URBAN FURNITURE</div>
+            <div className={`text-3xl font-bold ${playfairDisplay.className}`}>THE URBAN FURNITURE</div>
           </div>
         </div>
         <div className="hidden md:flex space-x-6">
           <Link href="/" className="font-medium text-black font-bold">Home</Link>
-          <a href="#" className="font-medium text-black font-bold">About Us</a>
+          <Link href="/about" className="font-medium text-black font-bold">About Us</Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <a href="#" className="flex items-center font-medium text-black font-bold">
@@ -110,7 +110,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>Home</Link>
-            <Link href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>About Us</Link>
+            <Link href="/about" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold" onClick={closeMenu}>About Us</Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-black font-bold flex justify-between items-center">

@@ -51,7 +51,6 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(false);
   const [categoryName, setCategoryName] = useState("");
   const [subcategoryName, setSubcategoryName] = useState("");
-  const [priceRange, setPriceRange] = useState([0, 1000000]);
   const sets = pathname.split("/");
   const category = sets[4].toLowerCase();
 
@@ -116,19 +115,20 @@ const CategoryPage = () => {
                     <Link
                       href={`/category/${product.category}/${product.subcategory}/${product.product_id}/${product.id}/info`}
                       passHref
-                      className="w-full h-64 mb-4 relative overflow-hidden rounded-md"
+                      className="w-full mb-4 relative overflow-hidden rounded-md"
+                      style={{ paddingBottom: '100%' }} // This creates a square aspect ratio
                     >
-                      <div className="relative w-48 h-48 mx-auto"> {/* Center the image */}
+                      <div className="absolute inset-0 flex items-center justify-center">
                         <Image
                           src={product.imageUrl[0] || "/Sofa.jpg"}
                           alt={product.name}
-                          fill
-                          objectFit="cover"
+                          layout="fill"
+                          objectFit="contain"
                           className="rounded-md"
                         />
                       </div>
                     </Link>
-                    <h2 className="text-2xl font-bold text-center text-black mt-4"> {/* Adjust margin-top */}
+                    <h2 className="text-2xl font-bold text-center text-black mt-4">
                       {product.name}
                     </h2>
                   </div>
