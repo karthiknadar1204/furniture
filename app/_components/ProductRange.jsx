@@ -89,8 +89,8 @@ const ProductRange = () => {
         <h2 className="text-2xl font-semibold">Product Range</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-20">
-        <ProductItem image="/sofa.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
-        <ProductItem image="/sofa.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
+        <ProductItem image="/bedsidetable.png" name="Bed Side Table" {...findCategoryAndSubcategory("BedsideTable")} />
+        <ProductItem image="/wardRobe.png" name="Wardrobe" {...findCategoryAndSubcategory("Wardrobe")} />
         <ProductItem image="/dressing-table_5679066.png" name="Dresser" {...findCategoryAndSubcategory("Dresser")} />
         <ProductItem image="/sofa.png" name="Sofa" {...findCategoryAndSubcategory("Sofa")} />
         <ProductItem image="/centretable.png" name="Center Table" {...findCategoryAndSubcategory("Center Table")} />
