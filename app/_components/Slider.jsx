@@ -52,21 +52,21 @@ const Carousel = () => {
               className="h-full w-full bg-cover bg-center bg-no-repeat"
               style={{ backgroundImage: `url(${slide.image})` }}
             >
-              <div className="absolute inset-0 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 to-white/25"></div>
               <div className="relative mx-auto h-full w-full max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8">
                 <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right sm:mt-12 sm:ml-4 custom-position-small-screens">
                   <motion.h1
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="text-3xl font-extrabold sm:text-5xl text-white lg:text-black"
+                    className="text-3xl font-extrabold sm:text-5xl text-black"
                   >
                     {slide.title.split(" ").map((word, i) => (
                       <span
                         key={i}
                         className={
                           i === 3
-                            ? "block font-extrabold text-rose-700 lg:text-black"
+                            ? "block font-extrabold text-rose-700"
                             : ""
                         }
                       >
@@ -78,7 +78,7 @@ const Carousel = () => {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.7 }}
-                    className="mt-4 sm:mt-6 max-w-lg sm:text-xl/relaxed text-white lg:text-black"
+                    className="mt-4 sm:mt-6 max-w-lg sm:text-xl/relaxed text-black"
                   >
                     {slide.description}
                   </motion.p>
